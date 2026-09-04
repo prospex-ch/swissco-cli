@@ -1,0 +1,200 @@
+---
+name: swissco
+description: >
+  Query Swiss company data from the shell with `swissco`: look up a company by
+  UID, search 790,000 companies by name or statutory purpose, list commercial
+  register publications from the SHAB gazette, trace one company's registry
+  events, or watch a list of companies for change.
+  Triggers: "Swiss company", "Swiss commercial register", "Handelsregister",
+  "registre du commerce", "Zefix", "SHAB", "SOGC", "FUSC", "Amtsblattportal",
+  "UID", "CHE-", "Swiss company lookup", "Swiss company search",
+  "incorporations in Switzerland", "who was appointed", "capital increase",
+  "company purpose", "watch a company", "swissco".
+---
+
+# swissco
+
+A zero-config CLI over two Swiss federal open-data sources. No API key, no
+signup, no config file.
+
+```bash
+uvx swissco --help          # run without installing
+pip install swissco         # or install it
+```
+
+## The five commands
+
+| Command | Answers |
+|---|---|
+| `swissco lookup <uid>` | Everything the register publishes about one company |
+| `swissco search <term>` | Which companies match a name or a statutory purpose |
+| `swissco publications` | What the gazette published in a date range |
+| `swissco events <uid>` | One company's registry history |
+| `swissco watch <file>` | What changed since the last run |
+
+All five take `--format table|json|csv` (default `table`), `--limit`, `--quiet`,
+`--interval`, `--state`, `--user`, `--password`.
+
+**Always pass `--format json` when you intend to parse the output.** The table
+format truncates long cells at 60 characters and marks them with `…`.
+
+## Reading the output
+
+Output never depends on whether stdout is a terminal, so a command produces the
+same bytes in a pipe as on screen. Progress notes go to stderr and `--quiet`
+silences them. Errors go to stderr as one JSON object:
+
+```json
+{"error": "not_found", "message": "no company with UID CHE-... in the LINDAS dataset"}
+```
+
+Exit codes: `0` success, `1` the request failed, `10` `watch` found a change.
+
+## lookup
+
+```bash
+swissco lookup CHE-444.420.929 --format json
+```
+
+Takes `CHE-444.420.929`, `CHE444420929`, or a UID embedded in other text. The
+check digit is verified locally, so a typo fails immediately with
+`{"error": "invalid_uid"}` and costs no request.
+
+Returns `legal_name`, `uid`, `chid`, `ehra_id`, `legal_form_code`, `legal_form`,
+`municipality`, `canton`, `address`, `purpose`, `zefix_uri`.
+
+With Zefix PublicREST credentials it also returns `status`, `capital_nominal`,
+`deletion_date`, `old_names`, `branch_offices`, `head_offices`,
+`has_taken_over`, `was_taken_over_by`.
+
+## search
+
+```bash
+swissco search "precision machining" --canton VD --limit 20 --format json
+swissco search "blockchain" --canton ZG --legal-form 0106
+```
+
+Matches a case-insensitive substring of the **legal name or the statutory
+purpose**. The purpose is the useful half: it is how a company describes its own
+business to the register, so it finds companies whose name gives nothing away.
+
+`--legal-form` takes an eCH-0097 code. The common ones: `0106` AG, `0107` GmbH,
+`0101` Einzelunternehmen, `0103` Kollektivgesellschaft, `0108` Genossenschaft,
+`0109` Verein.
+
+`--via rest` switches to a name-prefix search through the PublicREST API and
+needs credentials. Reach for it when the user typed something that reads like a
+company name and the substring search returned noise.
+
+## publications
+
+```bash
+swissco publications --since 2026-08-01 --until 2026-08-07 --canton ZH --format json
+swissco publications --since 2026-09-01 --canton ZG --type CAPITAL_INCREASED
+```
+
+Options: `--since`, `--until` (`YYYY-MM-DD`, defaults to yesterday), `--canton`
+(repeatable), `--sub-rubric` (`HR01` registrations, `HR02` mutations, `HR03`
+deletions, repeatable), `--query` (matches the title in any of four languages),
+`--type` (repeatable).
+
+`--type` accepts the eleven `shab-parser` event types: `INCORPORATION`,
+`BRANCH_CREATED`, `SEAT_MOVED`, `ADDRESS_CHANGED`, `NAME_CHANGED`,
+`PURPOSE_CHANGED`, `CAPITAL_INCREASED`, `MERGER`, `OFFICERS_CHANGED`,
+`LIQUIDATION`, `DELETED`.
+
+**Cost model, which decides how to phrase the command.** Without `--type`, only
+list pages are read: one request per 2,000 publications, so a week costs a
+handful of requests. With `--type`, every publication surviving the other
+filters has its body fetched at 0.5 seconds each, because the event types live
+in the body. The gazette publishes around a thousand entries a day, so
+`--type` over an unfiltered month is hours of requests. Narrow by `--canton`
+and by date first, then add `--type`.
+
+## events
+
+```bash
+swissco events CHE-444.420.929 --since 2026-01-01 --format json
+```
+
+The join between the two sources. The gazette's list pages carry a title and no
+UID, so `swissco` resolves the UID to a legal name through Zefix, keeps the
+publications whose title resembles that name, fetches only those bodies, and
+keeps the events whose body UID matches. Report what it returns as confirmed;
+the title match alone never reaches the output.
+
+Bodies are cached under the state directory by publication id, so an
+overlapping re-run is nearly free. `--no-cache` bypasses it.
+
+A wide range is slow before it is useful: listing a year takes a few hundred
+requests before the first body is fetched. Tell the user the range you are
+about to scan, and prefer the narrowest one that answers their question.
+
+## watch
+
+```bash
+printf 'CHE-444.420.929\nCHE-114.723.217\n' > uids.txt
+swissco watch uids.txt --state ~/.swissco/ --format json
+```
+
+The UID file takes one per line; blank lines and `#` comments are skipped, and
+a UID that fails its check digit is reported on stderr and passed over.
+
+Each company is compared by fingerprint, a digest over its identity, address and
+purpose fields. Rows come back with `uid`, `status`, `legal_name` and `changes`,
+where `status` is `added`, `changed`, or `no longer in the dataset`, and
+`changes` names the fields that moved.
+
+Exit `10` on any change and `0` on none, so a cron job can branch on it:
+
+```crontab
+0 7 * * * swissco watch ~/uids.txt --quiet --format json > ~/changes.json \
+          || mail -s "registry changes" me@example.com < ~/changes.json
+```
+
+**The first run reports every company as `added` and exits `10`.** That is the
+state file being written for the first time, not a change in the register. Say
+so when you report it.
+
+## Four things that will otherwise catch you out
+
+**A vanished UID has not been deleted.** `status` reads `no longer in the
+dataset` and must be reported that way. The Zefix LINDAS dataset carries active
+entities, so a UID can leave it after a re-registration, a correction, or a
+publication lag. To find out which, run `swissco events` on it, or `lookup` with
+PublicREST credentials, whose `status` and `deletion_date` answer directly.
+
+**The gazette API accepts filter parameters and ignores them.** `cantons`,
+`subRubrics`, `q` and `keywords` return HTTP 200 for an anonymous caller and
+change nothing. `swissco` filters client-side over the list page's own metadata.
+If you ever query that API yourself, compare the filtered total against the
+unfiltered one before trusting it.
+
+**The gazette rejects any request whose page offset reaches 10,000.** `swissco`
+splits a long date range into windows automatically and reports each on stderr.
+A range of several months is many requests, so it is worth narrowing.
+
+**Credentials are optional everywhere.** Every command works anonymously
+through LINDAS. `ZEFIX_USER` and `ZEFIX_PASSWORD` (or `--user`/`--password`)
+extend `lookup` and enable `search --via rest`. The credentials come from
+`zefix@bj.admin.ch` on request. Never suggest that the tool is unusable without
+them.
+
+## Rate limits
+
+One request per 0.5 seconds, exponential backoff over four attempts, and a
+`User-Agent` naming the project. `--interval` raises that floor and cannot lower
+it. These are small public services run by federal offices; leave the pacing
+alone.
+
+## Going further
+
+`swissco` is a shell over two libraries, and either can be imported directly
+when a command is the wrong shape:
+
+- [`zefix-parser`](https://zefix-parser.readthedocs.io): LINDAS SPARQL queries,
+  the PublicREST client, UID and CH-ID validation.
+- [`shab-parser`](https://shab-parser.readthedocs.io): gazette discovery, fetch,
+  XML parsing, and the eleven-type event classifier with its text extractors.
+
+Full documentation: <https://swissco.readthedocs.io>.

@@ -1,0 +1,359 @@
+<bulk:bulk-export xmlns:bulk="https://shab.ch/bulk-export">
+  <total>1027</total>
+  <pageRequest>
+    <page>0</page>
+    <size>12</size>
+  </pageRequest>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/de8f0150-4c89-4374-8c39-31c6fc9fa661/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>de8f0150-4c89-4374-8c39-31c6fc9fa661</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747585</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Rysaffe Administrateurs Sàrl, Genève</de>
+        <en>Change Rysaffe Administrateurs Sàrl, Genève</en>
+        <it>Cambiamenti Rysaffe Administrateurs Sàrl, Genève</it>
+        <fr>Mutation Rysaffe Administrateurs Sàrl, Genève</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/fff6b26e-ee75-4fc1-9d4c-648d67cc19f3/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>fff6b26e-ee75-4fc1-9d4c-648d67cc19f3</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747590</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation SCRASA SA, Satigny</de>
+        <en>Change SCRASA SA, Satigny</en>
+        <it>Cambiamenti SCRASA SA, Satigny</it>
+        <fr>Mutation SCRASA SA, Satigny</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/9b00310b-7613-40a9-a2a4-7767d13ac7c5/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>9b00310b-7613-40a9-a2a4-7767d13ac7c5</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747575</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation NIVRELIS SA, Meyrin</de>
+        <en>Change NIVRELIS SA, Meyrin</en>
+        <it>Cambiamenti NIVRELIS SA, Meyrin</it>
+        <fr>Mutation NIVRELIS SA, Meyrin</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/1bb39fbb-a766-4f17-90a9-a7054a39ebd9/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>1bb39fbb-a766-4f17-90a9-a7054a39ebd9</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747592</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Simsir, Genève</de>
+        <en>Change Simsir, Genève</en>
+        <it>Cambiamenti Simsir, Genève</it>
+        <fr>Mutation Simsir, Genève</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/07480f8b-9be2-4985-9218-41fadea3370f/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>07480f8b-9be2-4985-9218-41fadea3370f</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747588</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Salvatore Carco, Genève</de>
+        <en>Change Salvatore Carco, Genève</en>
+        <it>Cambiamenti Salvatore Carco, Genève</it>
+        <fr>Mutation Salvatore Carco, Genève</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/0a2083c5-cd2a-4d8c-a194-df7a1689b408/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR03-export.xsd">
+    <meta>
+      <id>0a2083c5-cd2a-4d8c-a194-df7a1689b408</id>
+      <rubric>HR</rubric>
+      <subRubric>HR03</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR03-1006747607</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <cantons>GE</cantons>
+      <title>
+        <de>Löschung Aris Gold Acquisition Switzerland SA, en liquidation, Genève</de>
+        <en>Deletion Aris Gold Acquisition Switzerland SA, en liquidation, Genève</en>
+        <it>Cancellazione Aris Gold Acquisition Switzerland SA, en liquidation, Genève</it>
+        <fr>Annulation Aris Gold Acquisition Switzerland SA, en liquidation, Genève</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/86110201-cc01-41e7-8e6d-5aa8729c6058/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR03-export.xsd">
+    <meta>
+      <id>86110201-cc01-41e7-8e6d-5aa8729c6058</id>
+      <rubric>HR</rubric>
+      <subRubric>HR03</subRubric>
+      <language>de</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR03-1006747026</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <cantons>ZG</cantons>
+      <secondaryTenants>
+        <tenantCode>kabzg</tenantCode>
+        <publicationDate>2026-09-03</publicationDate>
+      </secondaryTenants>
+      <title>
+        <de>Löschung Slater Financial Consulting GmbH in Liquidation, Zug</de>
+        <en>Deletion Slater Financial Consulting GmbH in Liquidation, Zug</en>
+        <it>Cancellazione Slater Financial Consulting GmbH in Liquidation, Zug</it>
+        <fr>Annulation Slater Financial Consulting GmbH in Liquidation, Zug</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/7f0cf235-0913-4ca8-8ac2-ba5a3d39f21a/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR03-export.xsd">
+    <meta>
+      <id>7f0cf235-0913-4ca8-8ac2-ba5a3d39f21a</id>
+      <rubric>HR</rubric>
+      <subRubric>HR03</subRubric>
+      <language>de</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR03-1006747091</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <cantons>BS</cantons>
+      <title>
+        <de>Löschung blc aquarius GmbH in Liquidation, Basel</de>
+        <en>Deletion blc aquarius GmbH in Liquidation, Basel</en>
+        <it>Cancellazione blc aquarius GmbH in Liquidation, Basel</it>
+        <fr>Annulation blc aquarius GmbH in Liquidation, Basel</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/5c82e84d-0879-4ca8-8728-83c0452dc7f5/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR03-export.xsd">
+    <meta>
+      <id>5c82e84d-0879-4ca8-8728-83c0452dc7f5</id>
+      <rubric>HR</rubric>
+      <subRubric>HR03</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR03-1006747505</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <cantons>VS</cantons>
+      <secondaryTenants>
+        <tenantCode>kabvs</tenantCode>
+        <publicationDate>2026-09-03</publicationDate>
+      </secondaryTenants>
+      <title>
+        <de>Löschung Adélia Sàrl en liquidation, Sierre</de>
+        <en>Deletion Adélia Sàrl en liquidation, Sierre</en>
+        <it>Cancellazione Adélia Sàrl en liquidation, Sierre</it>
+        <fr>Annulation Adélia Sàrl en liquidation, Sierre</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/99fcb8c2-56a6-495a-a5bf-a8f9d8ae6d55/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>99fcb8c2-56a6-495a-a5bf-a8f9d8ae6d55</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747594</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Soma House Sàrl, Genève</de>
+        <en>Change Soma House Sàrl, Genève</en>
+        <it>Cambiamenti Soma House Sàrl, Genève</it>
+        <fr>Mutation Soma House Sàrl, Genève</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/a87e3c28-0804-4848-bb26-d5616d80ecb4/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>a87e3c28-0804-4848-bb26-d5616d80ecb4</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747603</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Unitech Sàrl, Satigny, neu Unitech Sàrl, en liquidation</de>
+        <en>Change Unitech Sàrl, Satigny, new Unitech Sàrl, en liquidation</en>
+        <it>Cambiamenti Unitech Sàrl, Satigny, nuovo Unitech Sàrl, en liquidation</it>
+        <fr>Mutation Unitech Sàrl, Satigny, nouveau Unitech Sàrl, en liquidation</fr>
+      </title>
+    </meta>
+  </publication>
+  <publication ref="https://amtsblattportal.ch/api/v1/publications/70c4a1d0-3d56-4bc0-991a-46d898592e39/xml" schemaLocation="https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+    <meta>
+      <id>70c4a1d0-3d56-4bc0-991a-46d898592e39</id>
+      <rubric>HR</rubric>
+      <subRubric>HR02</subRubric>
+      <language>fr</language>
+      <registrationOffice>
+        <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+        <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+        <street>Bundesrain</street>
+        <streetNumber>20</streetNumber>
+        <swissZipCode>3003</swissZipCode>
+        <town>Bern</town>
+        <containsPostOfficeBox>false</containsPostOfficeBox>
+      </registrationOffice>
+      <publicationNumber>HR02-1006747595</publicationNumber>
+      <publicationState>PUBLISHED</publicationState>
+      <publicationDate>2026-09-03</publicationDate>
+      <primaryTenantCode>shab</primaryTenantCode>
+      <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+      <cantons>GE</cantons>
+      <title>
+        <de>Mutation Speedy Carrelages Sàrl, Genève, neu Speedy Carrelages Sàrl, en liquidation</de>
+        <en>Change Speedy Carrelages Sàrl, Genève, new Speedy Carrelages Sàrl, en liquidation</en>
+        <it>Cambiamenti Speedy Carrelages Sàrl, Genève, nuovo Speedy Carrelages Sàrl, en liquidation</it>
+        <fr>Mutation Speedy Carrelages Sàrl, Genève, nouveau Speedy Carrelages Sàrl, en liquidation</fr>
+      </title>
+    </meta>
+  </publication>
+</bulk:bulk-export>

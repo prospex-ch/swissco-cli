@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<HR03:publication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:HR03="https://shab.ch/shab/HR03-export" xsi:schemaLocation="https://shab.ch/shab/HR03-export https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR03-export.xsd">
+<meta>
+  <id>0a2083c5-cd2a-4d8c-a194-df7a1689b408</id>
+  <rubric>HR</rubric>
+  <subRubric>HR03</subRubric>
+  <language>fr</language>
+  <registrationOffice>
+    <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+    <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+    <street>Bundesrain</street>
+    <streetNumber>20</streetNumber>
+    <swissZipCode>3003</swissZipCode>
+    <town>Bern</town>
+    <containsPostOfficeBox>false</containsPostOfficeBox>
+  </registrationOffice>
+  <publicationNumber>HR03-1006747607</publicationNumber>
+  <publicationState>PUBLISHED</publicationState>
+  <publicationDate>2026-09-03</publicationDate>
+  <primaryTenantCode>shab</primaryTenantCode>
+  <cantons>GE</cantons>
+  <title>
+    <de>Löschung Aris Gold Acquisition Switzerland SA, en liquidation, Genève</de>
+    <en>Deletion Aris Gold Acquisition Switzerland SA, en liquidation, Genève</en>
+    <it>Cancellazione Aris Gold Acquisition Switzerland SA, en liquidation, Genève</it>
+    <fr>Annulation Aris Gold Acquisition Switzerland SA, en liquidation, Genève</fr>
+  </title>
+</meta>
+<content>
+  <testImport>false</testImport>
+  <journalNumber>21610</journalNumber>
+  <journalDate>2026-08-31</journalDate>
+  <publicationText>Aris Gold Acquisition Switzerland SA, en liquidation, à Genève, CHE-423.126.163 (FOSC du 13.06.2025, p. 0/1006355716). Sa liquidation étant terminée, la société est radiée.</publicationText>
+  <commonsActual>
+    <company>
+      <name>Aris Gold Acquisition Switzerland SA, en liquidation</name>
+      <translations>(Aris Gold Acquisition Switzerland Ltd, in liquidation) (Aris Gold Acquisition Switzerland AG, in Liquidation)</translations>
+      <uid>CHE-423.126.163</uid>
+      <uidOrganisationId>423126163</uidOrganisationId>
+      <uidOrganisationIdCategorie>CHE</uidOrganisationIdCategorie>
+      <code13>CH66008850224</code13>
+      <seat>Genève</seat>
+      <legalForm>0106</legalForm>
+      <noAddress>false</noAddress>
+      <address>
+        <street>Rue De-CANDOLLE</street>
+        <houseNumber>20</houseNumber>
+        <swissZipCode>1205</swissZipCode>
+        <town>Genève</town>
+      </address>
+    </company>
+    <purpose>La Société a pour but d'investir, de financier et ou de gérer en permanence des entreprises suisses et étrangères de toute nature, notamment dans le domaine de l'exploitation minière, du commerce et des services. Elle peut financer d'autres sociétés. La Société peut constituer des succursales et des filiales en Suisse et à l'étranger et participer à d'autres entreprises en Suisse et à l'étranger. La Société peut acquérir, détenir, gérer, gager, mettre en valeur et aliéner des immeubles et des droits de propriété intellectuelle en Suisse (concernant immeubles utilisés comme établissements stables et à l'exclusion des opérations soumises à la Loi fédérale sur l'acquisition d'immeubles par des personnes à l'étranger, LFAIE) et à l'étranger, ainsi que financer d'autres sociétés. La Société peut octroyer à ses filiales directes ou indirectes ainsi qu'à des tiers, y compris ses actionnaires directs ou indirects et leurs filiales directes ou indirectes, des financements directs ou indirects, pour leurs propres engagements ainsi que pour ceux d'autres sociétés (y compris des actionnaires directs ou indirects de la Société ou les sociétés dans lesquelles ces actionnaires ont une participation directe ou indirecte), émettre des sûretés de toute sorte, y compris au moyen de droits de gage sur les actifs de la Société ou de transferts fiduciaires ou cessions fiduciaires portant sur les actifs de la Société, émettre des garanties, se porter caution ou de toute autre manière cautionner ou garantir des obligations de la Société ou de ces autres sociétés. De plus, elle peut exploiter ou s'associer avec les sociétés mentionnées ci-dessus à des compensations de liquidités/centralisations de liquidités nettes (cash pooling), y compris des ajustements de solde périodiques (balancing). La Société peut exercer toutes les activités commerciales, financières et autres aptes à favoriser son but ou en rapport avec ce dernier, prenant en compte des avantages éventuels liés à l'appartenance à un groupe de sociétés ensemble, selon le cas, ses actionnaires directs ou indirects et leurs filiales directes ou indirectes respectives.</purpose>
+    <capital>
+      <nominal>100000.00</nominal>
+      <paid>100000.00</paid>
+    </capital>
+    <checkOptingOut>false</checkOptingOut>
+  </commonsActual>
+  <lastFosc>
+    <lastFoscDate>2025-06-13</lastFoscDate>
+    <lastFoscNumber>112</lastFoscNumber>
+    <lastFoscSequence>1006355716</lastFoscSequence>
+  </lastFosc>
+  <transaction>
+    <delete>
+      <deletionDate>2026-08-31</deletionDate>
+    </delete>
+  </transaction>
+  <senderOffice>
+    <officeName>Registre du commerce du Canton de Genève</officeName>
+  </senderOffice>
+</content>
+</HR03:publication>

@@ -1,0 +1,655 @@
+{
+  "head" : {
+    "vars" : [
+      "entity",
+      "legalName",
+      "name",
+      "uid",
+      "chid",
+      "ehraId",
+      "legalFormUri",
+      "legalFormLabel",
+      "municipalityUri",
+      "municipalityLabel",
+      "canton",
+      "streetAddress",
+      "postalCode",
+      "locality",
+      "purpose"
+    ]
+  },
+  "results" : {
+    "bindings" : [
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1024086"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Atelier roue libre S.A."
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Atelier roue libre S.A."
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE261821895"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55010954817"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1024086"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0106"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Aktiengesellschaft"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5495"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Penthalaz"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Chemin de l'Islettaz L 7"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1305"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Penthalaz"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "La société a pour but l'usinage, la réparation, la révision, la vente de matériel pour handicapés, la création mécanique de réhabilitation et d'adaptations spéciales, ainsi que l'exploitation d'un atelier de mécanique générale et de serrurerie (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1024086"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Atelier roue libre S.A."
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Atelier roue libre S.A."
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE261821895"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55010954817"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1024086"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0106"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Société anonyme"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5495"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Penthalaz"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Chemin de l'Islettaz L 7"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1305"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Penthalaz"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "La société a pour but l'usinage, la réparation, la révision, la vente de matériel pour handicapés, la création mécanique de réhabilitation et d'adaptations spéciales, ainsi que l'exploitation d'un atelier de mécanique générale et de serrurerie (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1143995"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Pousaz Mécanique SA"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Pousaz Mécanique SA"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE166712190"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011238855"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1143995"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0106"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Aktiengesellschaft"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5805"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Oron"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Zone Industrielle La Longeraie 2"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1607"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Palézieux"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "La société a pour but l'exploitation d'un atelier mécanique dans le domaine de l'usinage, appareillage, sanitaire, construction métallique, traitement des eaux, épuration, entretien et révision des installations (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1143995"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Pousaz Mécanique SA"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Pousaz Mécanique SA"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE166712190"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011238855"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1143995"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0106"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Société anonyme"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5805"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Oron"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Zone Industrielle La Longeraie 2"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1607"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Palézieux"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "La société a pour but l'exploitation d'un atelier mécanique dans le domaine de l'usinage, appareillage, sanitaire, construction métallique, traitement des eaux, épuration, entretien et révision des installations (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1253413"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "LAVA Technologies Sàrl en liquidation"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "LAVA Technologies Sàrl en liquidation"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE217431384"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011655925"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1253413"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Gesellschaft mit beschränkter Haftung GMBH / SARL"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5724"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Nyon"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "c/o A&A Fidu Nyon SA\nChemin du Midi 8"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1260"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Nyon"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but: développement de machines d'usinage (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1253413"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "LAVA Technologies Sàrl en liquidation"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "LAVA Technologies Sàrl en liquidation"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE217431384"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011655925"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1253413"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Société à responsabilité limitée Sàrl/GmbH"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5724"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Nyon"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "c/o A&A Fidu Nyon SA\nChemin du Midi 8"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1260"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Nyon"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but: développement de machines d'usinage (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1255971"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Cute Cut Sàrl"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Cute Cut Sàrl"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE403577924"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011659777"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1255971"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Gesellschaft mit beschränkter Haftung GMBH / SARL"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5586"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Lausanne"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Rue Saint-Martin 38 Bis"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1005"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Lausanne"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but toutes activités, notamment la fabrication, le prototypage et la commercialisation de tous produits, dans les domaines de l'architecture, de l'industrie, de la décoration et du design, en particulier au moyen de la fabrication additive, l'usinage CNC, la découpe laser et la découpe vinyl (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1255971"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Cute Cut Sàrl"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Cute Cut Sàrl"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE403577924"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011659777"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1255971"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Société à responsabilité limitée Sàrl/GmbH"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5586"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Lausanne"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Rue Saint-Martin 38 Bis"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1005"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Lausanne"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but toutes activités, notamment la fabrication, le prototypage et la commercialisation de tous produits, dans les domaines de l'architecture, de l'industrie, de la décoration et du design, en particulier au moyen de la fabrication additive, l'usinage CNC, la découpe laser et la découpe vinyl (pour but complet cf. statuts)."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1270616"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "DecoupART CNC Sàrl"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "DecoupART CNC Sàrl"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE342723896"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011681531"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1270616"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Gesellschaft mit beschränkter Haftung GMBH / SARL"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5588"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Paudex"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "c/o Idan Abramov\nRoute du Simplon 31"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1094"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Paudex"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but tous types de travaux dans les domaines des services d'usinage, de découpage et de gravure réalisés grâce à la technologie numérique, notamment avec utilisation de matières premières comme le bois et le métal."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1270616"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "DecoupART CNC Sàrl"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "DecoupART CNC Sàrl"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE342723896"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH55011681531"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1270616"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0107"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Société à responsabilité limitée Sàrl/GmbH"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/5588"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Paudex"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "VD"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "c/o Idan Abramov\nRoute du Simplon 31"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "1094"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Paudex"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "la société a pour but tous types de travaux dans les domaines des services d'usinage, de découpage et de gravure réalisés grâce à la technologie numérique, notamment avec utilisation de matières premières comme le bois et le métal."
+        }
+      }
+    ]
+  }
+}

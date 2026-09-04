@@ -1,0 +1,151 @@
+{
+  "head" : {
+    "vars" : [
+      "entity",
+      "legalName",
+      "name",
+      "uid",
+      "chid",
+      "ehraId",
+      "legalFormUri",
+      "legalFormLabel",
+      "municipalityUri",
+      "municipalityLabel",
+      "canton",
+      "streetAddress",
+      "postalCode",
+      "locality",
+      "purpose"
+    ]
+  },
+  "results" : {
+    "bindings" : [
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1702823"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Baumberger Bau AG"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Baumberger Bau AG"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE444420929"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH03691037869"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1702823"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0151"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "de",
+          "type" : "literal",
+          "value" : "Schweizerische Zweigniederlassung im Handelsregister eingetragen"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/413"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Koppigen"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "BE"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Hauptstrasse 6"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "3425"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Koppigen"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "Anbieten von Kleintransporte aller Art."
+        }
+      },
+      {
+        "entity" : {
+          "type" : "uri",
+          "value" : "https://register.ld.admin.ch/zefix/company/1702823"
+        },
+        "legalName" : {
+          "type" : "literal",
+          "value" : "Baumberger Bau AG"
+        },
+        "name" : {
+          "type" : "literal",
+          "value" : "Baumberger Bau AG"
+        },
+        "uid" : {
+          "type" : "literal",
+          "value" : "CHE444420929"
+        },
+        "chid" : {
+          "type" : "literal",
+          "value" : "CH03691037869"
+        },
+        "ehraId" : {
+          "type" : "literal",
+          "value" : "1702823"
+        },
+        "legalFormUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/ech/97/legalforms/0151"
+        },
+        "legalFormLabel" : {
+          "xml:lang" : "fr",
+          "type" : "literal",
+          "value" : "Succursale suisse inscrite au registre du commerce"
+        },
+        "municipalityUri" : {
+          "type" : "uri",
+          "value" : "https://ld.admin.ch/municipality/413"
+        },
+        "municipalityLabel" : {
+          "type" : "literal",
+          "value" : "Koppigen"
+        },
+        "canton" : {
+          "type" : "literal",
+          "value" : "BE"
+        },
+        "streetAddress" : {
+          "type" : "literal",
+          "value" : "Hauptstrasse 6"
+        },
+        "postalCode" : {
+          "type" : "literal",
+          "value" : "3425"
+        },
+        "locality" : {
+          "type" : "literal",
+          "value" : "Koppigen"
+        },
+        "purpose" : {
+          "type" : "literal",
+          "value" : "Anbieten von Kleintransporte aller Art."
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<HR02:publication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:HR02="https://shab.ch/shab/HR02-export" xsi:schemaLocation="https://shab.ch/shab/HR02-export https://amtsblattportal.ch/api/v1/schemas/shab/1.26/HR02-export.xsd">
+<meta>
+  <id>de8f0150-4c89-4374-8c39-31c6fc9fa661</id>
+  <rubric>HR</rubric>
+  <subRubric>HR02</subRubric>
+  <language>fr</language>
+  <registrationOffice>
+    <id>e15a629a-a08d-11e8-aa11-0050569d3c43</id>
+    <displayName>Bundesamt für Justiz (BJ), Eidgenössisches Amt für das Handelsregister</displayName>
+    <street>Bundesrain</street>
+    <streetNumber>20</streetNumber>
+    <swissZipCode>3003</swissZipCode>
+    <town>Bern</town>
+    <containsPostOfficeBox>false</containsPostOfficeBox>
+  </registrationOffice>
+  <publicationNumber>HR02-1006747585</publicationNumber>
+  <publicationState>PUBLISHED</publicationState>
+  <publicationDate>2026-09-03</publicationDate>
+  <primaryTenantCode>shab</primaryTenantCode>
+  <legalRemedy>La mutation de l'entité juridique mentionnée a été effectuée dans le registre du commerce. &lt;br />Publication selon les art. 9 et 35 ORC.</legalRemedy>
+  <cantons>GE</cantons>
+  <title>
+    <de>Mutation Rysaffe Administrateurs Sàrl, Genève</de>
+    <en>Change Rysaffe Administrateurs Sàrl, Genève</en>
+    <it>Cambiamenti Rysaffe Administrateurs Sàrl, Genève</it>
+    <fr>Mutation Rysaffe Administrateurs Sàrl, Genève</fr>
+  </title>
+</meta>
+<content>
+  <testImport>false</testImport>
+  <journalNumber>21590</journalNumber>
+  <journalDate>2026-08-31</journalDate>
+  <publicationText>Rysaffe Administrateurs Sàrl, à Genève, CHE-114.723.217 (FOSC du 29.05.2026, p. 0/1006662803). La procuration de Scheelbeek Saskia Esther Charlotte est radiée. Signature collective à deux a été conférée à Jammet ép. Van Brussel Delphine, de France, à Cranves-Sales, FRA, Jewsbury Katie, de Thônex, à Chigny, Pécherand-Charmet Estelle, de France, à Vandoeuvres, et Srishantharasah Saranniya, de France, à Genève.</publicationText>
+  <commonsNew>
+    <company>
+      <name>Rysaffe Administrateurs Sàrl</name>
+      <translations>(Rysaffe Verwaltungsratsmitglieder GmbH) (Rysaffe Directors LLC)</translations>
+      <uid>CHE-114.723.217</uid>
+      <uidOrganisationId>114723217</uidOrganisationId>
+      <uidOrganisationIdCategorie>CHE</uidOrganisationIdCategorie>
+      <code13>CH66002440098</code13>
+      <seat>Genève</seat>
+      <legalForm>0107</legalForm>
+      <noAddress>false</noAddress>
+      <address>
+        <street>Rue de la Confédération</street>
+        <houseNumber>5</houseNumber>
+        <swissZipCode>1204</swissZipCode>
+        <town>Genève</town>
+      </address>
+    </company>
+    <purpose>- de créer, établir et administrer des fondations et/ou des sociétés, d'exercer toutes fonctions de « protector » (surveillance), d'administrateur, d'exécuteur testamentaire, de représentant et de mandataire général, et, tant en qualité fiduciaire qu'en son propre compte, d'acquérir, de détenir, de gérer, de mettre en gage, d'hypothéquer ou de fournir une garantie sur et vendre/d'aliéner tous fonds, biens, droits, immeubles, ainsi que des participations et toutes autres valeurs mobilières. S'agissant de participations relatives aux sociétés immobilières sises en Suisse, elles se limiteront aux sociétés immobilières dont les immeubles sont à affectation exclusivement commerciale. Les acquisitions immobilières en Suisse se limiteront aux immeubles à affectation exclusivement commerciale. - de garantir ou d'octroyer des prêts à ses actionnaires, à des sociétés affiliées, ainsi qu'à des tiers, d'offrir tous services d'ordre administratif, technique, financier, comptable ou autre aux sociétés et succursales du groupe auquel elle appartient et, de façon générale, de procéder à toutes activités de gestion requises par lesdites sociétés ou qui lui incomberaient de toute outre manière. La société déploie son activité principalement en Suisse. Elle peut effectuer toute opération en rapport avec son but ou propre à le favoriser. Elle pourra en outre effectuer toutes opérations commerciales, financières, mobilières ou immobilières se rapportant directement ou indirectement à son but. Elle peut créer des succursales en Suisse et à l'étranger, prendre des participations, fonder ou financer des entreprises en Suisse ou à l'étranger.</purpose>
+    <capital>
+      <nominal>20000.00</nominal>
+      <paid>20000.00</paid>
+    </capital>
+    <revision>
+      <optingOut>false</optingOut>
+    </revision>
+  </commonsNew>
+  <commonsActual>
+    <company>
+      <name>Rysaffe Administrateurs Sàrl</name>
+      <translations>(Rysaffe Verwaltungsratsmitglieder GmbH) (Rysaffe Directors LLC)</translations>
+      <uid>CHE-114.723.217</uid>
+      <uidOrganisationId>114723217</uidOrganisationId>
+      <uidOrganisationIdCategorie>CHE</uidOrganisationIdCategorie>
+      <code13>CH66002440098</code13>
+      <seat>Genève</seat>
+      <legalForm>0107</legalForm>
+      <noAddress>false</noAddress>
+      <address>
+        <street>Rue de la Confédération</street>
+        <houseNumber>5</houseNumber>
+        <swissZipCode>1204</swissZipCode>
+        <town>Genève</town>
+      </address>
+    </company>
+    <purpose>- de créer, établir et administrer des fondations et/ou des sociétés, d'exercer toutes fonctions de « protector » (surveillance), d'administrateur, d'exécuteur testamentaire, de représentant et de mandataire général, et, tant en qualité fiduciaire qu'en son propre compte, d'acquérir, de détenir, de gérer, de mettre en gage, d'hypothéquer ou de fournir une garantie sur et vendre/d'aliéner tous fonds, biens, droits, immeubles, ainsi que des participations et toutes autres valeurs mobilières. S'agissant de participations relatives aux sociétés immobilières sises en Suisse, elles se limiteront aux sociétés immobilières dont les immeubles sont à affectation exclusivement commerciale. Les acquisitions immobilières en Suisse se limiteront aux immeubles à affectation exclusivement commerciale. - de garantir ou d'octroyer des prêts à ses actionnaires, à des sociétés affiliées, ainsi qu'à des tiers, d'offrir tous services d'ordre administratif, technique, financier, comptable ou autre aux sociétés et succursales du groupe auquel elle appartient et, de façon générale, de procéder à toutes activités de gestion requises par lesdites sociétés ou qui lui incomberaient de toute outre manière. La société déploie son activité principalement en Suisse. Elle peut effectuer toute opération en rapport avec son but ou propre à le favoriser. Elle pourra en outre effectuer toutes opérations commerciales, financières, mobilières ou immobilières se rapportant directement ou indirectement à son but. Elle peut créer des succursales en Suisse et à l'étranger, prendre des participations, fonder ou financer des entreprises en Suisse ou à l'étranger.</purpose>
+    <capital>
+      <nominal>20000.00</nominal>
+      <paid>20000.00</paid>
+    </capital>
+    <revision>
+      <optingOut>false</optingOut>
+    </revision>
+  </commonsActual>
+  <lastFosc>
+    <lastFoscDate>2026-05-29</lastFoscDate>
+    <lastFoscNumber>101</lastFoscNumber>
+    <lastFoscSequence>1006662803</lastFoscSequence>
+  </lastFosc>
+  <transaction>
+    <update>
+      <changements>
+        <others>true</others>
+        <nameChanged>false</nameChanged>
+        <uidChanged>false</uidChanged>
+        <legalStatusChanged>false</legalStatusChanged>
+        <seatChanged>false</seatChanged>
+        <addressChanged>false</addressChanged>
+        <purposeChanged>false</purposeChanged>
+        <capitalChanged>
+          <nominal>false</nominal>
+          <paid>false</paid>
+          <other>false</other>
+        </capitalChanged>
+        <statusChanged>
+          <bankruptcy>
+            <dissolution>false</dissolution>
+            <dismissal>false</dismissal>
+            <revocation>false</revocation>
+            <cancellation>false</cancellation>
+            <summary>false</summary>
+          </bankruptcy>
+          <liquidation>
+            <dissolution>
+              <nonExceptional>false</nonExceptional>
+              <or731b>false</or731b>
+              <hregv153b>false</hregv153b>
+            </dissolution>
+            <revocation>false</revocation>
+          </liquidation>
+          <suspension>false</suspension>
+          <reentry>false</reentry>
+          <reapplication>false</reapplication>
+        </statusChanged>
+      </changements>
+    </update>
+  </transaction>
+  <senderOffice>
+    <officeName>Registre du commerce du Canton de Genève</officeName>
+  </senderOffice>
+</content>
+</HR02:publication>
