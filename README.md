@@ -136,19 +136,24 @@ where `--quiet` silences them; errors go to stderr as a single JSON object.
 
 ## Use it from a coding agent
 
-This repository ships a skill for the [open agent skills
-ecosystem](https://github.com/vercel-labs/skills). It teaches Claude Code,
-Cursor, Codex and around twenty other agents how to drive `swissco`: the five
-commands, and the traps that quietly produce a wrong answer.
+This repository ships an [Agent Skill](https://agentskills.io/specification). It
+teaches Claude Code, Cursor, Codex and around twenty other agents how to drive
+`swissco`: the five commands, and the traps that quietly produce a wrong answer.
+
+The skill is the directory `.agents/skills/swissco/`, the cross-client location
+every compliant agent scans, with `.claude/skills/swissco` symlinked to it so
+Claude Code finds it in its own. `tests/test_skill.py` asserts the spec's rules
+against it on every run, so the skill cannot drift out of the format without the
+suite saying so.
 
 ```bash
 npx skills add prospex-ch/swissco-cli
 ```
 
-The skill lands in `.agents/skills/swissco/`, symlinked into each agent's own
-directory. Add `-g` to install it once for every project, `--all` to accept the
-defaults without being asked. `swissco` still has to be on the path or reachable
-through `uvx`.
+It lands in the consuming project's own `.agents/skills/swissco/`, symlinked
+into each agent's directory. Add `-g` to install it once for every project,
+`--all` to accept the defaults without being asked. `swissco` still has to be on
+the path or reachable through `uvx`.
 
 The agent can then answer questions like "which companies in Zug mention
 blockchain in their purpose" or "has anything changed at CHE-105.943.826 since

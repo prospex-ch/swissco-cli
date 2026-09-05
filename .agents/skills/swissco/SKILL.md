@@ -10,6 +10,17 @@ description: >
   "UID", "CHE-", "Swiss company lookup", "Swiss company search",
   "incorporations in Switzerland", "who was appointed", "capital increase",
   "company purpose", "watch a company", "swissco".
+license: MIT
+compatibility: >
+  Requires the `swissco` CLI on PATH, or `uvx` to run it without installing,
+  and outbound network access to lindas.admin.ch and amtsblattportal.ch.
+  Zefix PublicREST credentials are optional and extend two commands.
+allowed-tools: Bash(swissco:*) Bash(uvx swissco:*)
+metadata:
+  author: prospex-ch
+  version: "0.1.0"
+  repository: https://github.com/prospex-ch/swissco-cli
+  documentation: https://swissco.readthedocs.io
 ---
 
 # swissco
