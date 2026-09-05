@@ -1,6 +1,6 @@
 [project]
 name = "swissco"
-version = "0.1.0"
+version = "0.2.0"
 description = "Swiss company data from the shell: Zefix and SHAB in one command"
 readme = "README.md"
 license = "MIT"
@@ -8,7 +8,10 @@ authors = [
     { name = "Prospex", email = "hello@prospex.ch" },
 ]
 requires-python = ">=3.14"
-keywords = ["swiss", "zefix", "shab", "sogc", "commercial-register", "handelsregister", "cli", "lindas"]
+keywords = [
+    "swiss", "zefix", "shab", "sogc", "commercial-register", "handelsregister",
+    "cli", "lindas", "simap", "finma", "procurement", "public-tenders",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -22,6 +25,7 @@ dependencies = [
     "httpx>=0.27",
     "zefix-parser[http]>=0.1",
     "shab-parser[http]>=0.2",
+    "openpyxl>=3.1,<4",
 ]
 
 [project.optional-dependencies]
