@@ -134,6 +134,26 @@ in your terminal works in CI.
 cannot appear in one format and be missing from another. Progress notes go to stderr,
 where `--quiet` silences them; errors go to stderr as a single JSON object.
 
+## Use it from a coding agent
+
+This repository ships a skill for the [open agent skills
+ecosystem](https://github.com/vercel-labs/skills). It teaches Claude Code,
+Cursor, Codex and around twenty other agents how to drive `swissco`: the five
+commands, and the traps that quietly produce a wrong answer.
+
+```bash
+npx skills add prospex-ch/swissco-cli
+```
+
+The skill lands in `.agents/skills/swissco/`, symlinked into each agent's own
+directory. Add `-g` to install it once for every project, `--all` to accept the
+defaults without being asked. `swissco` still has to be on the path or reachable
+through `uvx`.
+
+The agent can then answer questions like "which companies in Zug mention
+blockchain in their purpose" or "has anything changed at CHE-105.943.826 since
+June" by running the right command itself.
+
 ## Access and terms
 
 **SHAB / Amtsblattportal.** The REST API is the channel the operator offers for

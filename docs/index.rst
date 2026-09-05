@@ -26,6 +26,7 @@ Built and maintained by `Prospex <https://prospex.ch>`_.
 
    quickstart
    commands
+   skill
    sources
    api
    changelog
