@@ -43,6 +43,18 @@ Watch
 .. automodule:: swissco.watch
    :members:
 
+Procurement
+-----------
+
+.. automodule:: swissco.simap
+   :members:
+
+FINMA
+-----
+
+.. automodule:: swissco.finma
+   :members:
+
 Rendering
 ---------
 

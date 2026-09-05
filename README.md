@@ -4,16 +4,18 @@
 [![Documentation](https://readthedocs.org/projects/swissco/badge/?version=latest)](https://swissco.readthedocs.io/en/latest/)
 
 Swiss company data from the shell. Look a company up by UID, search 790,000 of them
-by name or by what they say they do, list gazette publications, or watch a list of
-companies for change.
+by name or by what they say they do, list gazette publications, browse public
+tenders, check a bank licence, or watch a list of companies for change.
 
 ```bash
 uvx swissco lookup CHE-444.420.929
 ```
 
-All data comes from two federal open-data sources:
-[Zefix on LINDAS](https://ld.admin.ch/) for the commercial register, and the
-[Amtsblattportal](https://amtsblattportal.ch) for the Swiss Official Gazette of Commerce.
+All data comes from four federal open-data sources, none of which needs a
+credential: [Zefix on LINDAS](https://ld.admin.ch/) for the commercial register,
+the [Amtsblattportal](https://amtsblattportal.ch) for the Swiss Official Gazette
+of Commerce, [simap.ch](https://www.simap.ch) for public procurement, and
+[FINMA](https://www.finma.ch) for authorised banks and securities firms.
 
 Built and maintained by [Prospex](https://prospex.ch), a Swiss B2B sales intelligence platform.
 
@@ -124,6 +126,69 @@ A UID that has left the dataset is reported as **no longer in the dataset**, nev
 deleted. LINDAS carries only active entities, so a UID can leave the dataset after a
 re-registration, a correction, or a publication lag.
 
+### `swissco tenders`
+
+Public procurement projects from simap, by canton and publication date.
+
+```console
+$ swissco tenders --canton ZG --since 2026-08-25 --limit 3
+TITLE                                                  PROJECT_NUMBER  BUYER                           CANTON  CITY  PUBLICATION_DATE  PUBLICATION_TYPE
+-----------------------------------------------------  --------------  ------------------------------  ------  ----  ----------------  ----------------
+Neubau Pfarreizentrum, Katholische Kirchgemeinde Baar  22047           Katholische Kirchgemeinde Baar  ZG      Baar  2026-09-05        award
+```
+
+`--canton` and `--type` are repeatable; `--lang` picks which language the title and
+buyer are reported in. Paging is a cursor rather than an offset, so a wide range
+costs pages instead of failing.
+
+The date range filters each project's **newest publication**, not the award inside
+it. A project awarded in March whose newest publication is an August correction
+appears only in a range covering August.
+
+### `swissco vendor`
+
+Whether a company is registered as a supplier on simap.
+
+```console
+$ swissco vendor CHE-409.633.691
+name                   Egli Gartenbau AG Sursee
+uid no                 CHE-409.633.691
+city                   Sursee
+canton                 LU
+url                    https://www.gartenbau-egli.ch
+company size           medium
+```
+
+A UID is resolved to a legal name, searched for, and then confirmed against the
+directory's own `uidNo`. The name finds the candidates; the UID decides between
+them — the directory holds both an "Egli Gartenbau AG Sursee" and an "Egli
+Gartenbau AG Uster".
+
+**There is no command for what a company has won.** The supplier named on a simap
+award carries no UID, only free text typed by a procurement office. Matching those
+names would produce a plausible answer that is sometimes about a different company,
+so it is not offered.
+
+### `swissco finma`
+
+FINMA's authorised banks and securities firms, joined to a UID.
+
+```console
+$ swissco finma --uid CHE-105.845.287
+name                  Aargauische Kantonalbank
+city                  Aarau 1
+licence type          Bank
+supervisory category  3
+uid                   CHE-105.845.287
+```
+
+Also `swissco finma "Raiffeisen"`, `--licence`, `--category`, and `--finma` on
+`lookup`. Both files are cached for a week under the state directory.
+
+Banks and securities firms only: FINMA licenses insurers, portfolio managers and
+fund management companies on separate lists this does not read. A miss means "not
+on this list", never "unlicensed".
+
 ## Output
 
 `--format` is the only thing that changes the output. A command piped into `jq` and
@@ -176,12 +241,20 @@ command here works without them. Supplying them through `--user`/`--password` or
 `ZEFIX_USER`/`ZEFIX_PASSWORD` adds capital, status, deletion date, former names and
 corporate relations to `lookup`, and a name-prefix search to `search`.
 
+**simap.** The read API answers unauthenticated. The site's `robots.txt` disallows
+the single-page app's project-detail routes, which `swissco` refuses outright; it
+says nothing about `/api`, where every request here goes.
+
+**FINMA.** Two published files, downloaded as any browser would. FINMA republishes
+rather than versions them, so they are cached for a week and re-fetched after
+that.
+
 ## Being a good citizen
 
 These are small public services run by federal offices. `swissco` sends one request
-every 0.5 seconds at most, backs off exponentially on failure, and identifies itself
-with a real `User-Agent` carrying this repository's URL. `--interval` can raise that
-floor and cannot lower it.
+every 0.5 seconds at most — one a second for FINMA, which asks for more room — backs
+off exponentially on failure, and identifies itself with a real `User-Agent` carrying
+this repository's URL. `--interval` can raise those floors and cannot lower them.
 
 ## Built on
 
@@ -190,13 +263,15 @@ floor and cannot lower it.
 | [`zefix-parser`](https://pypi.org/project/zefix-parser/) | Zefix: LINDAS SPARQL, PublicREST, UID validation |
 | [`shab-parser`](https://pypi.org/project/shab-parser/) | SHAB: discovery, fetch, parse, eleven-type event classification |
 
-Both are MIT and maintained alongside this one. `swissco` is the shell over them.
+Both are MIT and maintained alongside this one. simap and FINMA ship no client, so
+`swissco` carries its own for those two.
 
 ## Watching more than a list
 
 `swissco watch` from cron is the free version of what [Prospex](https://prospex.ch)
 sells. Prospex watches the whole register continuously, joins it to hiring, funding,
-tenders and web signals, and tells you which of those changes is worth a call. If a
+tenders and web signals — including the award side of simap that this tool
+deliberately leaves alone — and tells you which of those changes is worth a call. If a
 cron job and a UID list cover it, this tool is all you need.
 
 ## License

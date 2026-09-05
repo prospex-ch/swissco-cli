@@ -71,6 +71,72 @@ The official REST API at ``zefix.admin.ch/ZefixPublicREST``.
   ``lookup`` and enables ``search --via rest``.
 
 
+simap
+-----
+
+Swiss public procurement. The read API at ``www.simap.ch/api`` answers
+unauthenticated on project search, publication detail, the vendor directory,
+procurement offices and institutions. The site's ``robots.txt`` disallows the
+single-page app's ``/de/project-detail`` and ``/fr/project-detail`` routes; it
+says nothing about ``/api``, which is where every request here goes. ``swissco``
+refuses those two prefixes outright rather than relying on never building one.
+
+Pagination is a cursor, not an offset: each page carries a ``lastItem`` that is
+handed back to fetch the next. That is a happier arrangement than the gazette's
+— there is no ceiling to run into, so a wide range costs pages rather than
+failing. ``swissco`` stops when the cursor stops moving, which is also what
+protects it from a service that keeps returning the same page.
+
+There is no UID-indexed endpoint
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the constraint that shapes both commands, and it is worth knowing even
+if you never run ``swissco``.
+
+The vendor *directory* publishes a ``uidNo`` on every row, so a company can be
+confirmed there exactly. The vendor named on an *award* cannot: that record
+carries a ``vendorId`` and a free-text name typed by a procurement office, and
+nothing else. The directory holds both an "Egli Gartenbau AG Sursee" and an
+"Egli Gartenbau AG Uster" — two unrelated companies, different cantons — and no
+name comparison distinguishes them reliably.
+
+So ``swissco tenders`` browses projects and ``swissco vendor`` confirms a
+directory profile, and neither claims to say what a company has won. Building
+that from names would produce a plausible answer that is sometimes about a
+different company, which is worse than not answering.
+
+The archive is not wired up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``archiv.simap.ch`` holds the pre-relaunch platform, roughly 2008-06 to
+2024-06, behind a POST search and an XML detail document. ``swissco`` does not
+read it yet. When it does, note that the archive's supplier UID field does not
+exist before 2023, so most of that history will never be UID-confirmable.
+
+FINMA
+-----
+
+Two files, both static downloads, neither needing a credential: ``beh.xlsx``,
+the authorised banks and securities firms, and ``uid.csv``, a separate
+``(name, city, authorisation type) -> UID`` crosswalk. The ``?sc_lang=en``
+parameter is not cosmetic — it fixes the column headers the parser matches on.
+
+**Banks and securities firms only.** FINMA publishes two dozen further lists —
+insurers, portfolio managers, fund management companies, market
+infrastructures, self-regulatory organisations — and ``swissco`` reads none of
+them. The reason is that this workbook's parser finds its columns by header
+name and checks itself against FINMA's own declared total, so a layout change
+stops it loudly; the other lists are laid out such that the same change shifts
+a value into the wrong column and reports success. A company absent from
+``swissco finma`` is therefore not "unlicensed" — it is "not a bank or
+securities firm on this list", which is a much smaller claim.
+
+FINMA republishes both files rather than versioning them, so ``swissco`` caches
+them for a week under the state directory and re-downloads after that.
+``--refresh`` ignores the cache. A download that fails while a stale copy
+exists falls back to that copy and says how old it is, because an answer whose
+age is visible beats no answer.
+
 Being a good citizen
 --------------------
 

@@ -184,3 +184,124 @@ directly.
 
 Only UIDs in the file you passed can be reported as vanished. Dropping a UID
 from the list takes it off the watch, and says nothing about the register.
+
+tenders
+-------
+
+Public procurement projects from simap, by canton and publication date.
+
+.. code-block:: console
+
+   $ swissco tenders --canton ZG --since 2026-08-25 --limit 3
+   simap projects published 2026-08-25 to 2026-09-05 in ZG. The date filters each project's newest publication, not its award.
+     page of 13 projects (after 0)
+   TITLE                                                  PROJECT_NUMBER  BUYER                           CANTON  CITY  PUBLICATION_DATE  PUBLICATION_TYPE
+   -----------------------------------------------------  --------------  ------------------------------  ------  ----  ----------------  ----------------
+   Neubau Pfarreizentrum, Katholische Kirchgemeinde Baar  22047           Katholische Kirchgemeinde Baar  ZG      Baar  2026-09-05        award
+
+.. list-table::
+   :header-rows: 1
+
+   * - Flag
+     - Does
+   * - ``--since`` / ``--until``
+     - Publication date range, ``YYYY-MM-DD``. Defaults to the last seven days.
+   * - ``--canton``
+     - Two-letter canton code, repeatable.
+   * - ``--type``
+     - Publication type, repeatable: ``award``, ``tender``, ``direct_award``,
+       ``abandonment``, ``revocation`` and six more.
+   * - ``--lang``
+     - Which language to report the title and buyer in, when the office
+       published more than one. Defaults to de, then fr, it, en.
+
+Paging is a cursor rather than an offset, so a wide range costs pages and never
+fails the way a deep gazette query does. Each page is reported on stderr as it
+lands.
+
+The date range is on the newest publication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``--since`` and ``--until`` filter each project's **newest** publication, not
+the date of the award or the tender inside it. A project awarded in March whose
+newest publication is an August correction appears only in a range covering
+August. This is the endpoint's own filter, not something ``swissco`` imposes,
+and it is the easiest thing here to misread.
+
+vendor
+------
+
+Whether a company is registered as a supplier on simap.
+
+.. code-block:: console
+
+   $ swissco vendor CHE-409.633.691
+   searching the simap vendor directory for 'Egli Gartenbau AG Sursee'
+   1 profile(s) confirmed on the directory's own uidNo
+   name                   Egli Gartenbau AG Sursee
+   uid no                 CHE-409.633.691
+   street                 Schlottermilch 18
+   postal code            6210
+   city                   Sursee
+   canton                 LU
+   url                    https://www.gartenbau-egli.ch
+   company size           medium
+
+A UID is resolved to a legal name through LINDAS, searched for in the
+directory, and then **confirmed on the directory's own** ``uidNo``. The name
+finds the candidates; the UID decides between them. Anything else is treated as
+free text and every hit is returned unfiltered.
+
+``not_in_vendor_directory`` means no profile carries that UID. A company can bid
+without a directory profile, and a bidding consortium has a profile with no UID
+at all, so that is "not in the directory", never "does not bid for public work".
+
+.. warning::
+
+   ``swissco`` has no command for what a company has **won**. The supplier named
+   on a simap award carries no UID, only a free-text name typed by a procurement
+   office — the directory holds both an "Egli Gartenbau AG Sursee" and an "Egli
+   Gartenbau AG Uster". Joining an award to a company would mean matching those
+   names with nothing to confirm the match against, so it is not offered.
+
+finma
+-----
+
+FINMA's authorised banks and securities firms, joined to a UID.
+
+.. code-block:: console
+
+   $ swissco finma --uid CHE-105.845.287
+   FINMA lists 278 authorised banks and securities firms; 277 carry a UID.
+   name                  Aargauische Kantonalbank
+   city                  Aarau 1
+   licence type          Bank
+   supervisory category  3
+   uid                   CHE-105.845.287
+   foreign control       false
+
+.. list-table::
+   :header-rows: 1
+
+   * - Flag
+     - Does
+   * - ``QUERY``
+     - Optional text matched against the name or the city.
+   * - ``--uid``
+     - One institution by UID, printed as label/value pairs.
+   * - ``--licence``
+     - ``Bank``, ``Securities firm``, ``Foreign bank branch office`` or
+       ``Foreign securities firm branch office``.
+   * - ``--category``
+     - FINMA supervisory category, ``1`` (largest) to ``5``.
+   * - ``--refresh``
+     - Re-download both files, ignoring the week-long cache.
+
+Absence is not a missing licence
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A UID that is not on this list is reported as **not on FINMA's authorised banks
+and securities firms list**, which is all it means. FINMA licenses insurers,
+portfolio managers, trustees, fund management companies and more on separate
+lists ``swissco`` does not read, and publishes a few authorised entities with
+no UID at all. Never read a miss here as "unlicensed".

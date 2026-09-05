@@ -1,6 +1,28 @@
 Changelog
 =========
 
+0.2.0 (2026-09-05)
+------------------
+
+Two new sources, both federal, both unauthenticated.
+
+- ``tenders``: public procurement projects from simap, filtered by canton and
+  publication date. Cursor pagination, so there is no offset ceiling to run
+  into the way the gazette has one.
+- ``vendor``: whether a company is in simap's vendor directory. A UID is
+  confirmed against the directory's own ``uidNo`` rather than matched by name.
+- ``finma``: FINMA's authorised banks and securities firms, joined to a UID
+  through the crosswalk FINMA publishes alongside the list.
+- ``lookup --finma`` adds the licence type and supervisory category to a
+  company. Opt-in, because it costs two downloads a plain ``lookup`` does not.
+- A week-long file cache under the state directory for the two FINMA files,
+  which upstream republishes rather than versions. ``--refresh`` ignores it,
+  and a failed download falls back to the last good copy rather than to
+  nothing.
+- No award-history command. The supplier named on a simap award carries no UID,
+  so joining one to a company would mean matching a free-text name with nothing
+  to confirm it against.
+
 0.1.0 (2026-09-04)
 -------------------
 
