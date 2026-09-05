@@ -6,7 +6,10 @@ from datetime import date
 
 import pytest
 
-from swissco import cli
+import importlib
+import sys
+
+from swissco import cli, finma, simap
 
 
 class TestParser:
@@ -14,7 +17,16 @@ class TestParser:
         with pytest.raises(SystemExit):
             cli.build_parser().parse_args(["--help"])
         out = capsys.readouterr().out
-        for command in ("lookup", "search", "publications", "events", "watch"):
+        for command in (
+            "lookup",
+            "search",
+            "publications",
+            "events",
+            "watch",
+            "tenders",
+            "vendor",
+            "finma",
+        ):
             assert command in out
 
     @pytest.mark.parametrize(
@@ -25,6 +37,9 @@ class TestParser:
             ["publications"],
             ["events", "CHE-444.420.929"],
             ["watch", "uids.txt"],
+            ["tenders"],
+            ["vendor", "CHE-444.420.929"],
+            ["finma"],
         ],
     )
     def test_every_command_takes_the_shared_flags(self, argv):
@@ -132,3 +147,64 @@ class TestPageEstimate:
         note = cli._page_estimate(date(2026, 1, 1), date(2026, 12, 31))
         assert "windows" in note
         assert "both" in note
+
+
+class TestTheNewSources:
+    """Everything here fails before a request, so the suite stays offline."""
+
+    def test_a_publication_type_simap_does_not_have_is_rejected(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["tenders", "--type", "not_a_type"])
+
+    def test_every_documented_publication_type_is_offered(self):
+        for pub_type in simap.KNOWN_PUB_TYPES:
+            args = cli.build_parser().parse_args(["tenders", "--type", pub_type])
+            assert args.type == [pub_type]
+
+    def test_tender_cantons_and_types_are_repeatable(self):
+        args = cli.build_parser().parse_args(
+            ["tenders", "--canton", "ZH", "--canton", "ZG", "--type", "award"]
+        )
+        assert args.canton == ["ZH", "ZG"]
+
+    def test_a_language_outside_the_four_is_rejected(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["tenders", "--lang", "rm"])
+
+    def test_a_supervisory_category_outside_one_to_five_is_rejected(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["finma", "--category", "6"])
+
+    def test_a_licence_type_finma_does_not_issue_is_rejected(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["finma", "--licence", "Crypto bank"])
+
+    def test_every_licence_type_finma_does_issue_is_offered(self):
+        for licence in finma.LICENCE_TYPES:
+            args = cli.build_parser().parse_args(["finma", "--licence", licence])
+            assert args.licence == licence
+
+    def test_finma_takes_an_optional_query(self):
+        assert cli.build_parser().parse_args(["finma"]).query == ""
+        assert cli.build_parser().parse_args(["finma", "Raiffeisen"]).query == "Raiffeisen"
+
+    def test_an_invalid_uid_fails_finma_before_any_download(self, capsys):
+        assert cli.main(["finma", "--uid", "not-a-uid"]) == cli.EXIT_ERROR
+        assert "invalid_uid" in capsys.readouterr().err
+
+    def test_lookup_does_not_ask_for_finma_unless_told_to(self):
+        assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929"]).finma is False
+        assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929", "--finma"]).finma
+
+
+class TestStartupCost:
+    def test_a_spreadsheet_library_is_not_loaded_to_parse_a_flag(self):
+        """``uvx swissco lookup`` must not pay for openpyxl it will not use.
+
+        The import lives inside ``finma.parse_bank_workbook`` on purpose. This
+        guards it, because it regresses the moment someone tidies the imports.
+        """
+        for module in ("swissco.cli", "swissco.finma", "swissco.sources", "openpyxl"):
+            sys.modules.pop(module, None)
+        importlib.import_module("swissco.cli").build_parser()
+        assert "openpyxl" not in sys.modules

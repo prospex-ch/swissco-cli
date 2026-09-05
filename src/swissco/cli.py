@@ -26,7 +26,19 @@ from pathlib import Path
 from shab_parser import EventType, ShabError, parse_xml
 from zefix_parser import AuthenticationError, ZefixError
 
-from . import __version__, companies, config, events, publications, render, sources, watch
+from . import (
+    __version__,
+    companies,
+    config,
+    events,
+    finma,
+    publications,
+    render,
+    simap,
+    sources,
+    watch,
+)
+from ._http import HttpError
 from .companies import NotAUid
 
 EXIT_OK = 0
@@ -52,6 +64,9 @@ examples:
   swissco publications --canton ZH --since 2026-08-01 --type CAPITAL_INCREASED
   swissco events CHE-444.420.929 --since 2024-01-01
   swissco watch uids.txt --state ~/.swissco/
+  swissco tenders --canton ZH --since 2026-08-01
+  swissco vendor CHE-409.633.691
+  swissco finma --category 3
 """
 
 
@@ -72,6 +87,12 @@ def build_parser() -> argparse.ArgumentParser:
         description="Print everything the register publishes about one company.",
     )
     lookup.add_argument("uid", help="CHE-444.420.929, CHE444420929, or a CH-ID")
+    lookup.add_argument(
+        "--finma",
+        action="store_true",
+        help="add FINMA licence and supervisory category. Costs two extra "
+        "downloads on a cold cache, so it is opt-in.",
+    )
     _common(lookup)
     lookup.set_defaults(handler=_lookup)
 
@@ -149,6 +170,73 @@ def build_parser() -> argparse.ArgumentParser:
     _common(evts)
     evts.set_defaults(handler=_events)
 
+    tndrs = subparsers.add_parser(
+        "tenders",
+        help="simap public-procurement publications in a date range",
+        description=(
+            "Browse public tenders and awards by canton and date. This lists "
+            "projects; it does not report which company won one, because the "
+            "supplier named on an award carries no UID."
+        ),
+    )
+    tndrs.add_argument("--since", type=_day, help="first publication date (YYYY-MM-DD)")
+    tndrs.add_argument("--until", type=_day, help="last publication date (YYYY-MM-DD)")
+    tndrs.add_argument("--canton", action="append", default=[], help="canton code, repeatable")
+    tndrs.add_argument(
+        "--type",
+        action="append",
+        default=[],
+        choices=simap.KNOWN_PUB_TYPES,
+        metavar="PUBTYPE",
+        help="publication type, repeatable. One of: "
+        f"{', '.join(simap.KNOWN_PUB_TYPES)}",
+    )
+    tndrs.add_argument(
+        "--lang",
+        choices=simap.LANGUAGE_ORDER,
+        default="",
+        help="preferred language for the title and buyer, when the office "
+        "published more than one (default: de, then fr, it, en)",
+    )
+    _common(tndrs)
+    tndrs.set_defaults(handler=_tenders)
+
+    vndr = subparsers.add_parser(
+        "vendor",
+        help="one company in the simap vendor directory",
+        description=(
+            "Look a company up in simap's vendor directory. A UID is confirmed "
+            "exactly against the directory's own uidNo; free text is searched "
+            "as given."
+        ),
+    )
+    vndr.add_argument("query", help="a UID, or text to search vendor names for")
+    _common(vndr)
+    vndr.set_defaults(handler=_vendor)
+
+    fnm = subparsers.add_parser(
+        "finma",
+        help="FINMA-authorised banks and securities firms",
+        description=(
+            "List or look up institutions on FINMA's authorised banks and "
+            "securities firms list. That list does not cover insurers, "
+            "portfolio managers or fund management companies."
+        ),
+    )
+    fnm.add_argument("query", nargs="?", default="", help="text to match in the name or city")
+    fnm.add_argument("--uid", default="", help="one institution by UID")
+    fnm.add_argument(
+        "--licence", default="", choices=sorted(finma.LICENCE_TYPES), metavar="TYPE",
+        help="licence type",
+    )
+    fnm.add_argument("--category", default="", choices=("1", "2", "3", "4", "5"),
+                     help="FINMA supervisory category")
+    fnm.add_argument(
+        "--refresh", action="store_true", help="re-download the lists, ignoring the cache"
+    )
+    _common(fnm)
+    fnm.set_defaults(handler=_finma)
+
     wtch = subparsers.add_parser(
         "watch",
         help="report what changed since the last run",
@@ -207,6 +295,12 @@ def main(argv: list[str] | None = None) -> int:
         render.fail(str(exc), code="authentication_failed")
     except (ZefixError, ShabError) as exc:
         render.fail(str(exc), code="upstream_error")
+    except simap.ContractError as exc:
+        render.fail(str(exc), code="contract_changed")
+    except (simap.SimapError, finma.FinmaError) as exc:
+        render.fail(str(exc), code="parse_error")
+    except HttpError as exc:
+        render.fail(str(exc), code="upstream_error")
     except OSError as exc:
         render.fail(str(exc), code="io_error")
     except KeyboardInterrupt:
@@ -234,6 +328,24 @@ def _lookup(args, settings: config.Config) -> int:
             "former names and corporate relations.",
             quiet=settings.quiet,
         )
+
+    if args.finma:
+        with sources.finma(settings, on_note=_noter(settings)) as client:
+            snapshot = finma.snapshot(
+                client,
+                cache_dir=settings.state_dir / "cache",
+                on_note=_noter(settings),
+            )
+        record = finma.by_uid(snapshot, uid)
+        if record is None:
+            render.note(
+                "not on FINMA's authorised banks and securities firms list; "
+                "that list does not cover insurers, portfolio managers or fund "
+                "management companies.",
+                quiet=settings.quiet,
+            )
+        else:
+            row.update(finma.lookup_fields(record))
 
     render.emit_object(row, fmt=args.fmt)
     return EXIT_OK
@@ -348,6 +460,124 @@ def _events(args, settings: config.Config) -> int:
         render.note("no confirmed events in this range", quiet=settings.quiet)
     render.emit(rows, fmt=args.fmt)
     return EXIT_OK
+
+
+def _tenders(args, settings: config.Config) -> int:
+    start, end = _range(args, default_days=7)
+    cantons = tuple(canton.upper() for canton in args.canton)
+    render.note(
+        f"simap projects published {start} to {end}"
+        + (f" in {', '.join(cantons)}" if cantons else "")
+        + ". The date filters each project's newest publication, not its award.",
+        quiet=settings.quiet,
+    )
+
+    def page(count: int, so_far: int) -> None:
+        render.note(f"  page of {count} projects (after {so_far})", quiet=settings.quiet)
+
+    with sources.simap(settings, on_note=_noter(settings)) as client:
+        rows = [
+            simap.tender_row(project, lang=args.lang)
+            for project in simap.iter_projects(
+                client,
+                since=start,
+                until=end,
+                pub_types=tuple(args.type),
+                cantons=cantons,
+                limit=args.limit,
+                on_page=page,
+            )
+        ]
+
+    if not rows:
+        render.note("no projects in this range", quiet=settings.quiet)
+    render.emit(rows, fmt=args.fmt)
+    return EXIT_OK
+
+
+def _vendor(args, settings: config.Config) -> int:
+    try:
+        uid = companies.resolve_uid(args.query)
+    except NotAUid:
+        uid = ""
+
+    with sources.simap(settings, on_note=_noter(settings)) as client:
+        if not uid:
+            rows = [
+                simap.vendor_row(vendor)
+                for vendor in simap.iter_vendors(client, search=args.query, limit=args.limit)
+            ]
+            render.emit(rows, fmt=args.fmt)
+            return EXIT_OK
+
+        with sources.lindas(settings) as lindas:
+            entity = companies.lookup(lindas, uid)
+        if entity is None:
+            render.fail(f"no company with UID {args.query} in the LINDAS dataset", code="not_found")
+            return EXIT_ERROR
+
+        name = entity.legal_name
+        render.note(f"searching the simap vendor directory for {name!r}", quiet=settings.quiet)
+        found = list(simap.iter_vendors(client, search=name, limit=max(args.limit, 50)))
+        confirmed = simap.confirmed_by_uid(found, uid)
+        if not confirmed:
+            render.fail(
+                f"{name} is not in the simap vendor directory under {uid}. "
+                "A company can bid without a directory profile, and a "
+                "consortium profile carries no UID at all.",
+                code="not_in_vendor_directory",
+            )
+            return EXIT_ERROR
+        render.note(
+            f"{len(confirmed)} profile(s) confirmed on the directory's own uidNo",
+            quiet=settings.quiet,
+        )
+        profile = simap.parse_vendor_public(client.fetch_vendor_public(confirmed[0].vendor_id))
+
+    render.emit_object(simap.vendor_profile_row(profile), fmt=args.fmt)
+    return EXIT_OK
+
+
+def _finma(args, settings: config.Config) -> int:
+    with sources.finma(settings, on_note=_noter(settings)) as client:
+        snapshot = finma.snapshot(
+            client,
+            cache_dir=settings.state_dir / "cache",
+            use_cache=not args.refresh,
+            on_note=_noter(settings),
+        )
+
+    render.note(
+        f"FINMA lists {snapshot.declared_total} authorised banks and securities "
+        f"firms; {snapshot.with_uid} carry a UID. Insurers, portfolio managers "
+        "and fund management companies are on other lists, not this one.",
+        quiet=settings.quiet,
+    )
+
+    if args.uid:
+        uid = companies.resolve_uid(args.uid)
+        record = finma.by_uid(snapshot, uid)
+        if record is None:
+            render.fail(
+                f"{uid} is not on FINMA's authorised banks and securities firms "
+                "list. That is not the same as unauthorised: FINMA publishes "
+                "some authorised entities with no UID, and other licence types "
+                "on other lists.",
+                code="not_found",
+            )
+            return EXIT_ERROR
+        render.emit_object(finma.bank_row(record), fmt=args.fmt)
+        return EXIT_OK
+
+    records = finma.filter_records(
+        snapshot, query=args.query, licence_type=args.licence, category=args.category
+    )
+    render.emit([finma.bank_row(record) for record in records[: args.limit]], fmt=args.fmt)
+    return EXIT_OK
+
+
+def _noter(settings: config.Config):
+    return lambda message: render.note(message, quiet=settings.quiet)
 
 
 def _watch(args, settings: config.Config) -> int:
