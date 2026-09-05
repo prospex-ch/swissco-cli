@@ -55,6 +55,18 @@ FINMA
 .. automodule:: swissco.finma
    :members:
 
+GLEIF
+-----
+
+.. automodule:: swissco.gleif
+   :members:
+
+Research
+--------
+
+.. automodule:: swissco.aramis
+   :members:
+
 Rendering
 ---------
 

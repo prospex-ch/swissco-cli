@@ -9,7 +9,7 @@ import pytest
 import importlib
 import sys
 
-from swissco import cli, finma, simap
+from swissco import aramis, cli, finma, simap
 
 
 class TestParser:
@@ -26,6 +26,8 @@ class TestParser:
             "tenders",
             "vendor",
             "finma",
+            "lei",
+            "research",
         ):
             assert command in out
 
@@ -40,6 +42,8 @@ class TestParser:
             ["tenders"],
             ["vendor", "CHE-444.420.929"],
             ["finma"],
+            ["lei", "CHE-444.420.929"],
+            ["research", "CHE-444.420.929"],
         ],
     )
     def test_every_command_takes_the_shared_flags(self, argv):
@@ -195,6 +199,36 @@ class TestTheNewSources:
     def test_lookup_does_not_ask_for_finma_unless_told_to(self):
         assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929"]).finma is False
         assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929", "--finma"]).finma
+
+    def test_lookup_does_not_ask_for_a_lei_unless_told_to(self):
+        """Both extras cost requests a plain lookup does not, so both are opt-in."""
+        assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929"]).lei is False
+        assert cli.build_parser().parse_args(["lookup", "CHE-444.420.929", "--lei"]).lei
+
+    def test_lei_counts_children_unless_asked_to_list_them(self):
+        assert cli.build_parser().parse_args(["lei", "CHE-444.420.929"]).children is False
+        assert cli.build_parser().parse_args(["lei", "CHE-444.420.929", "--children"]).children
+
+    def test_an_invalid_uid_fails_lei_before_any_request(self, capsys):
+        assert cli.main(["lei", "not-a-uid"]) == cli.EXIT_ERROR
+        assert "invalid_uid" in capsys.readouterr().err
+
+    def test_research_defaults_to_the_language_the_service_answers_in(self):
+        args = cli.build_parser().parse_args(["research", "hydrogen"])
+        assert args.lang == aramis.DEFAULT_LANGUAGE == "EN"
+
+    def test_every_service_language_is_offered(self):
+        for language in aramis.LANGUAGES:
+            args = cli.build_parser().parse_args(["research", "x", "--lang", language])
+            assert args.lang == language
+
+    def test_a_mis_cased_language_is_rejected_before_the_service_400s(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["research", "x", "--lang", "en"])
+
+    def test_a_language_aramis_does_not_speak_is_rejected(self):
+        with pytest.raises(SystemExit):
+            cli.build_parser().parse_args(["research", "x", "--lang", "RM"])
 
 
 class TestStartupCost:

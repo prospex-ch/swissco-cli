@@ -1,7 +1,7 @@
 Commands
 ========
 
-Five commands. Each takes ``--format table|json|csv`` (default ``table``),
+Ten commands. Each takes ``--format table|json|csv`` (default ``table``),
 ``--limit``, ``--quiet``, ``--interval``, ``--state``, ``--user`` and
 ``--password``.
 
@@ -32,6 +32,10 @@ request.
 
 The UID comes back punctuated. LINDAS stores it bare (``CHE444420929``), and
 every other place a person meets it writes ``CHE-444.420.929``.
+
+``--finma`` adds the licence type and supervisory category. ``--lei`` adds the
+LEI and the entities that consolidate this company. Both are opt-in, because
+each costs requests a plain ``lookup`` does not.
 
 With Zefix PublicREST credentials, ``lookup`` also prints ``status``,
 ``capital_nominal``, ``deletion_date``, ``old_names``, ``branch_offices``,
@@ -305,3 +309,133 @@ and securities firms list**, which is all it means. FINMA licenses insurers,
 portfolio managers, trustees, fund management companies and more on separate
 lists ``swissco`` does not read, and publishes a few authorised entities with
 no UID at all. Never read a miss here as "unlicensed".
+
+
+lei
+---
+
+One company's Legal Entity Identifier, and the group it is consolidated into.
+
+.. code-block:: console
+
+   $ swissco lei CHE-412.669.376
+   legal name                 UBS Switzerland AG
+   lei                        549300WOIFUSNYH0FL22
+   registered as              CHE-412.669.376
+   jurisdiction               CH
+   status                     ACTIVE
+   registration status        ISSUED
+   city                       Zurich
+   initial registration date  2014-12-15
+   direct parent              UBS AG (BFM8T61CT2L1QCEMIK50, CH)
+   ultimate parent            UBS Group AG (549300SZJ9VS8SGXAN81, CH)
+   direct children            0
+
+.. list-table::
+   :header-rows: 1
+
+   * - Flag
+     - Does
+   * - ``UID``
+     - The company, in any punctuation. The check digit is verified locally.
+   * - ``--children``
+     - List the entities this one consolidates as rows, instead of counting
+       them. ``--limit`` sets the page size.
+
+One lookup costs one search request plus three relationship requests.
+``--children`` changes only what is printed; the requests are the same.
+``swissco lookup --lei`` skips the child count and costs three requests.
+
+The parent is a foreign entity as often as a Swiss one, which is the reason to
+run this: a Swiss subsidiary's owner abroad has no commercial-register entry,
+so the register cannot answer the question at all.
+
+A parent is an accounting relationship
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+GLEIF Level 2 records **accounting consolidation**: the parent is the entity
+that consolidates this one into its financial statements. A parent that
+consolidates a subsidiary may hold less than all of it, and a majority owner
+that consolidates nothing is absent from the file. Report a parent as
+"consolidated by", and treat the shareholding question as unanswered.
+
+Most Swiss companies have no LEI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+About 28,000 Swiss entities hold an LEI, against roughly 790,000 in the
+commercial register, and about 81% of those LEIs carry a register number that
+``swissco`` can join on. A ``not_found`` here means the company has no LEI on
+file. It says nothing about whether the company exists, trades, or is in good
+standing.
+
+GLEIF stores the register number in whichever spelling the entity filed, and
+both are in live use: Aargauische Kantonalbank is ``CHE105845287`` and UBS
+Switzerland AG is ``CHE-412.669.376``. ``swissco`` tries the squashed form
+first and the dotted form second, so a lookup costs one request more when the
+company filed the dotted one.
+
+research
+--------
+
+Federally funded research projects from ARAMIS, the Confederation's register of
+research and innovation mandates. Innosuisse grants, SNSF money and every
+departmental research contract are in it.
+
+.. code-block:: console
+
+   $ swissco research CHE-337.958.399
+   searching ARAMIS for 'MPAssist', then confirming each candidate on its own participant UID
+   TITLE                                  PROJECT_NUMBER    OFFICE      STATUS      START_DATE  ROLE
+   Reducing Documentation Burden in Sw…   137.839 INNO-ICT  INNOSUISSE  In Process  2026-06-01  Implementation Partner
+
+.. list-table::
+   :header-rows: 1
+
+   * - Flag
+     - Does
+   * - ``QUERY``
+     - A UID, confirmed exactly against each project's own participant UID, or
+       free text, searched as given and reported unconfirmed.
+   * - ``--limit``
+     - How many candidate projects are hydrated. Each one is a request.
+   * - ``--lang``
+     - ``DE``, ``EN``, ``FR`` or ``IT``, case-sensitive. Defaults to ``EN``.
+
+A project's participant list is the only place a UID appears, and the list page
+does not carry it, so every candidate costs one detail request at the current
+interval. ``swissco`` says how many it is about to fetch before it starts.
+
+Free text returns every hit with its participating organisations and their
+UIDs. A UID returns only the projects carrying a participant whose own UID
+matches, so a project found by name that belongs to a different company is
+dropped.
+
+The search does not reach the participant list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ARAMIS offers three text keys: the project title and abstract, the free-text
+contractor field, and the budget field. A company is findable through this
+command when its name appears in one of those texts. A company named only in
+the structured participant list cannot be reached at all, and that is where an
+Innosuisse implementation partner usually sits.
+
+An empty result therefore means "no project mentions this company by name",
+which is a good deal weaker than "this company has taken no federal research
+money".
+
+Structured participants start around 2015
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A project from before about 2015 carries no structured partner, and the
+partner's UID only appears from about 2022. Older projects can never be
+confirmed against a UID, so a UID query leaves them out. Both search paths ask
+for the newest projects first, which is where the UIDs are.
+
+``swissco`` reads the organisational fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ARAMIS publishes a named researcher on most projects, with an e-mail address,
+up to three telephone numbers and a fax number. ``swissco`` reads the
+organisation, the role, the UID and the place, and
+:class:`swissco.aramis.Participant` has no field for anything else, so no
+output format can emit a person's contact details.

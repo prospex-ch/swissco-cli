@@ -3,42 +3,44 @@ name: swissco
 description: >
   Query Swiss company data from the shell with `swissco`: look up a company by
   UID, search 790,000 companies by name or statutory purpose, list commercial
-  register publications from the SHAB gazette, trace one company's registry
-  events, watch a list of companies for change, browse public procurement on
-  simap, or check FINMA's authorised banks and securities firms.
+  register publications from the SHAB gazette, trace registry events, watch
+  companies for change, browse simap procurement, check FINMA's authorised
+  banks, resolve a UID to an LEI and its group parent at GLEIF, or find
+  federally funded research a company took part in.
   Triggers: "Swiss company", "Swiss commercial register", "Handelsregister",
-  "registre du commerce", "Zefix", "SHAB", "SOGC", "FUSC", "Amtsblattportal",
-  "UID", "CHE-", "Swiss company lookup", "Swiss company search",
-  "incorporations in Switzerland", "who was appointed", "capital increase",
-  "company purpose", "watch a company", "simap", "public procurement",
-  "public tender", "Ausschreibung", "Beschaffung", "appel d'offres",
-  "Zuschlag", "FINMA", "authorised bank", "bank licence",
-  "Bewilligungstraeger", "securities firm", "swissco".
+  "registre du commerce", "Zefix", "SHAB", "SOGC", "Amtsblattportal", "UID",
+  "CHE-", "incorporations in Switzerland", "who was appointed",
+  "capital increase", "company purpose", "watch a company", "simap",
+  "public procurement", "public tender", "Ausschreibung", "appel d'offres",
+  "Zuschlag", "FINMA", "authorised bank", "securities firm", "LEI", "GLEIF",
+  "parent company", "ultimate parent", "group structure", "ARAMIS",
+  "Innosuisse", "SNSF", "research funding", "Forschungsprojekt", "swissco".
 license: MIT
 compatibility: >
   Requires the `swissco` CLI on PATH, or `uvx` to run it without installing,
   and outbound network access to lindas.admin.ch, amtsblattportal.ch,
-  www.simap.ch and www.finma.ch. Zefix PublicREST credentials are optional and
+  www.simap.ch, www.finma.ch, api.gleif.org and
+  www.webservice.aramis.admin.ch. Zefix PublicREST credentials are optional and
   extend two commands; nothing else needs any.
 allowed-tools: Bash(swissco:*) Bash(uvx swissco:*)
 metadata:
   author: prospex-ch
-  version: "0.2.0"
+  version: "0.3.0"
   repository: https://github.com/prospex-ch/swissco-cli
   documentation: https://swissco.readthedocs.io
 ---
 
 # swissco
 
-A zero-config CLI over two Swiss federal open-data sources. No API key, no
-signup, no config file.
+A zero-config CLI over six open-data sources. No API key, no signup, no config
+file.
 
 ```bash
 uvx swissco --help          # run without installing
 pip install swissco         # or install it
 ```
 
-## The eight commands
+## The ten commands
 
 | Command | Answers |
 |---|---|
@@ -50,8 +52,10 @@ pip install swissco         # or install it
 | `swissco tenders` | Which public tenders and awards were published, by canton and date |
 | `swissco vendor <uid>` | Whether a company is in simap's vendor directory |
 | `swissco finma` | Whether a company is a FINMA-authorised bank or securities firm |
+| `swissco lei <uid>` | A company's LEI, and the group that consolidates it |
+| `swissco research <uid\|text>` | Federally funded research a company took part in |
 
-All eight take `--format table|json|csv` (default `table`), `--limit`, `--quiet`,
+All ten take `--format table|json|csv` (default `table`), `--limit`, `--quiet`,
 `--interval`, `--state`, `--user`, `--password`.
 
 **Always pass `--format json` when you intend to parse the output.** The table
@@ -239,7 +243,57 @@ office`, `Foreign securities firm branch office`. `supervisory_category` runs
 The two files are cached under the state directory for a week; `--refresh`
 re-downloads them.
 
-## Six things that will otherwise catch you out
+## lei
+
+A company's Legal Entity Identifier from GLEIF, and its group.
+
+```bash
+swissco lei CHE-412.669.376 --format json
+swissco lei CHE-101.329.561 --children --limit 20
+```
+
+Returns `legal_name`, `lei`, `registered_as`, `jurisdiction`, `status`,
+`registration_status`, `legal_form`, `city`, `country`, `other_names`, `bic`,
+`initial_registration_date`, `last_update_date`, `next_renewal_date`,
+`direct_parent`, `ultimate_parent`, `direct_children`. With `--children`, rows of `legal_name`,
+`lei`, `jurisdiction`, `registered_as`, `status`, `city`, `country` instead, and
+the whole count on stderr.
+
+`direct_parent` and `ultimate_parent` read `Name (LEI, jurisdiction)`, or
+`none reported` when the entity files no parent. That string is GLEIF answering
+"this entity reports no parent", so report it that way.
+
+`swissco lookup <uid> --lei` folds `lei`, `lei_status`, `direct_parent` and
+`ultimate_parent` into a company profile. It costs three extra requests, so
+reach for it when the group is the question and leave it off otherwise.
+
+The parent is frequently a foreign entity with no Swiss register entry, which is
+the case for running this at all.
+
+## research
+
+Federally funded research projects from ARAMIS.
+
+```bash
+swissco research CHE-337.958.399 --format json      # a UID: confirmed rows only
+swissco research "hydrogen storage" --limit 10      # free text: every hit
+swissco research CHE-337.958.399 --lang DE
+```
+
+With a UID, returns `title`, `project_number`, `office`, `status`,
+`start_date`, `end_date`, `granted_total_costs`, `role`, `uid`, `aramis_id`.
+With free text, `participants` replaces `role` and `uid`, listing each
+organisation and its UID where one exists.
+
+`office` is the funding body: `INNOSUISSE`, `SNF`, `BAFU`, `BFE` and the rest.
+`role` is the participation kind ARAMIS records, `Implementation Partner`,
+`Scientific management`, `Contractor / contract holder` and others.
+
+`--lang` takes `DE`, `EN`, `FR` or `IT` and is case-sensitive. `--limit` is the
+number of candidate projects hydrated, and each one is a request, so a large
+limit is a slow command.
+
+## Eight things that will otherwise catch you out
 
 **A vanished UID has not been deleted.** `status` reads `no longer in the
 dataset` and must be reported that way. The Zefix LINDAS dataset carries active
@@ -273,6 +327,24 @@ that `swissco` does not read. A company absent from `swissco finma` is not
 publishes a few authorised entities with no UID at all, so a UID lookup can
 miss one that is on the list.
 
+**An empty `swissco research` is not "no federal research money".** ARAMIS
+searches project titles, abstracts and the free-text contractor field. It
+indexes the structured participant list under none of those, and that list is
+the only place a company's UID appears. A company named only as a structured
+partner, which is where most Innosuisse implementation partners sit, cannot be
+found at all. Report an empty result as "no ARAMIS project mentions this company
+by name", and never as evidence the company has taken no public research money.
+A structured partner also only appears from about 2015 and its UID from about
+2022, so a UID query leaves older projects out entirely.
+
+**A GLEIF parent is an accounting relationship, not a shareholding.** Level 2
+records which entity consolidates which into its financial statements. A parent
+may consolidate a company it does not wholly own, and a majority owner that
+consolidates nothing never appears. Say "consolidated by", and treat "who owns
+this company" as unanswered by this source. A `not_found` from `swissco lei` is
+also just "no LEI on file": about 28,000 Swiss entities hold one against roughly
+790,000 in the register.
+
 **Credentials are optional everywhere.** Every command works anonymously
 through LINDAS. `ZEFIX_USER` and `ZEFIX_PASSWORD` (or `--user`/`--password`)
 extend `lookup` and enable `search --via rest`. The credentials come from
@@ -285,6 +357,9 @@ One request per 0.5 seconds, exponential backoff over four attempts, and a
 `User-Agent` naming the project. FINMA is paced slower still, at one request a
 second. `--interval` raises those floors and cannot lower them. These are small
 public services run by federal offices; leave the pacing alone.
+
+`swissco research` is the one command whose cost grows with `--limit`: each
+candidate project costs a detail request. Ask for what the question needs.
 
 ## Going further
 

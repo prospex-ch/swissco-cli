@@ -75,3 +75,28 @@ class TestUserAgent:
     def test_it_names_the_tool_and_where_to_complain(self):
         assert config.USER_AGENT.startswith("swissco/")
         assert "github.com/prospex-ch/swissco-cli" in config.USER_AGENT
+
+
+class TestTheShippedVersion:
+    """``__version__`` reaches PyPI, the ``--version`` flag and the User-Agent.
+
+    It is written in two places and nothing else compares them, so a release
+    that bumps ``pyproject.toml`` alone ships a package announcing the previous
+    version to every operator reading their logs.
+    """
+
+    def test_it_is_the_version_pyproject_declares(self):
+        from pathlib import Path
+
+        from swissco import __version__
+
+        pyproject = (Path(__file__).resolve().parent.parent / "pyproject.toml").read_text(
+            encoding="utf-8"
+        )
+        assert f'version = "{__version__}"' in pyproject
+
+    def test_the_user_agent_carries_it(self):
+        from swissco import __version__
+        from swissco.config import USER_AGENT
+
+        assert f"swissco/{__version__}" in USER_AGENT

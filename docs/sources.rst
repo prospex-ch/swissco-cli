@@ -1,7 +1,7 @@
 Sources and terms
 =================
 
-Three upstream endpoints, with different access rules.
+Six upstream sources, with different access rules.
 
 
 SHAB / Amtsblattportal
@@ -136,6 +136,85 @@ them for a week under the state directory and re-downloads after that.
 ``--refresh`` ignores the cache. A download that fails while a stale copy
 exists falls back to that copy and says how old it is, because an answer whose
 age is visible beats no answer.
+
+GLEIF
+-----
+
+The Global Legal Entity Identifier Foundation's record API, at
+``api.gleif.org/api/v1``. Free, global, unauthenticated, and the only source
+here from outside Switzerland.
+
+* ``filter[entity.registeredAs]`` matches the register number an entity gave
+  its LEI issuer. For a Swiss entity that is the UID, so a UID resolves to an
+  LEI in one request.
+* Both UID spellings are in live use, ``CHE105845287`` and
+  ``CHE-412.669.376``, and ``swissco`` tries the squashed one first.
+* Level 2 relationship records answer ``/direct-parent``,
+  ``/ultimate-parent``, ``/direct-children`` and ``/ultimate-children``. An
+  entity that reports no parent answers HTTP 404, which ``swissco`` reads as
+  the absence it is.
+* Coverage is about 28,000 Swiss entities against roughly 790,000 in the
+  register, and about 81% of those carry a register number to join on.
+
+Level 2 records consolidation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The parent GLEIF names is the entity that consolidates this one into its
+financial statements. That relationship overlaps with ownership only in part:
+consolidation can happen below full ownership, and an owner who consolidates
+nothing never appears. ``swissco`` reports it as "consolidated
+by" for that reason, and the shareholding question stays unanswered.
+
+The value here is the parent the Swiss register cannot show at all. A Swiss
+subsidiary of a foreign group has no register entry for its owner, and GLEIF
+carries one.
+
+ARAMIS
+------
+
+The Confederation's register of publicly funded research and innovation
+projects, served by the WCF endpoint at
+``www.webservice.aramis.admin.ch/public/service.svc``. Innosuisse and SNSF
+grants, and every departmental research mandate.
+
+* Unauthenticated. ``projectlist`` takes a POST query and ``project`` a GET by
+  ``aramisId``.
+* ``Accept: application/json`` is required; the service answers XML otherwise,
+  and the two dialects disagree about dates.
+* ``Count`` above 100 answers HTTP 500 with an ``A2AFault`` body, and
+  ``Language`` is case-sensitive. ``swissco`` refuses both before the request.
+* A fault body also arrives with HTTP 200, so ``swissco`` decides on the body.
+* The service serialises at roughly 2.4 requests a second and publishes no SLA.
+
+The 43 MB bulk export at ``datenausgabe.aramis.admin.ch`` is off the client's
+host allowlist, so no ``swissco`` command can pull it.
+
+The search reaches the text only
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``ProjectQuery`` offers exactly three text keys: the title and abstract, the
+free-text contractor field, and the budget field. The structured participant
+list is indexed by none of them, and that list is the only place a UID appears.
+
+So a company is findable when its name is written into one of those texts, and
+invisible when it appears only as a structured partner. Innosuisse
+implementation partners usually sit in the second group. ``swissco research``
+with a UID hydrates each candidate the search did return and keeps only the
+projects whose participant UID matches, which makes every reported row exact
+and leaves the empty case meaning "not mentioned by name".
+
+A structured partner appears from about 2015 and its UID from about 2022, so a
+UID query cannot reach the older corpus at all. Both search paths ask for the
+newest projects first for that reason.
+
+What ``swissco`` reads off a participant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The organisation, the role, the UID, and the place. A participant block also
+carries the researcher's given name, family name, e-mail address, three
+telephone numbers, a fax number and a ``ShortViewName`` that runs the
+organisation and the person together. None of those has a field in
+:class:`swissco.aramis.Participant`, so no output format can emit one.
 
 Being a good citizen
 --------------------

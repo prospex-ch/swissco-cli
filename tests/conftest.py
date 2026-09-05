@@ -10,6 +10,13 @@ hand-editing that total -- which would test the fiction rather than the
 contract. The tests that need input FINMA does not publish, such as a workbook
 with a missing column, build it in memory and say so; you cannot capture a
 response that does not exist upstream.
+
+One fixture is deliberately altered rather than captured whole. ARAMIS publishes
+researchers' names, e-mail addresses and telephone numbers on a project detail,
+and ``swissco`` reads none of them. Republishing a real researcher's contact
+details in a public repository to prove that would be a strange way to keep the
+promise, so ``aramis/project_detail_no_uid.json`` carries invented people in
+those fields. Everything the parser actually reads is as captured.
 """
 
 from __future__ import annotations
@@ -96,3 +103,87 @@ def finma_workbook() -> bytes:
 def finma_crosswalk() -> bytes:
     """FINMA's (name, city, authorisation type) -> UID crosswalk, as published."""
     return load("finma", "uid.csv")
+
+
+@pytest.fixture
+def gleif_record_squashed() -> bytes:
+    """A search hit filed under the squashed UID: Aargauische Kantonalbank."""
+    return load("gleif", "record_squashed_uid.json")
+
+
+@pytest.fixture
+def gleif_record_dotted() -> bytes:
+    """A search hit filed under the dotted UID: UBS Switzerland AG."""
+    return load("gleif", "record_dotted_uid.json")
+
+
+@pytest.fixture
+def gleif_search_empty() -> bytes:
+    """A search that found no LEI at all, which is the common Swiss outcome."""
+    return load("gleif", "search_empty.json")
+
+
+@pytest.fixture
+def gleif_direct_parent() -> bytes:
+    """UBS Switzerland AG's direct parent: UBS AG."""
+    return load("gleif", "direct_parent.json")
+
+
+@pytest.fixture
+def gleif_ultimate_parent() -> bytes:
+    """The entity at the top of that chain: UBS Group AG."""
+    return load("gleif", "ultimate_parent.json")
+
+
+@pytest.fixture
+def gleif_direct_children() -> bytes:
+    """One page of UBS AG's 38 direct children, with the total in the meta."""
+    return load("gleif", "direct_children.json")
+
+
+@pytest.fixture
+def gleif_children_empty() -> bytes:
+    """A children response for an entity that consolidates nothing."""
+    return load("gleif", "children_empty.json")
+
+
+@pytest.fixture
+def gleif_relation_404() -> bytes:
+    """The body GLEIF returns when an entity reports no parent."""
+    return load("gleif", "relation_not_found.json")
+
+
+@pytest.fixture
+def aramis_search() -> bytes:
+    """A contractor search page: five projects, and the matched total."""
+    return load("aramis", "projectlist_search.json")
+
+
+@pytest.fixture
+def aramis_search_confirmed() -> bytes:
+    """The search page whose single hit carries the UID under test."""
+    return load("aramis", "projectlist_confirmed.json")
+
+
+@pytest.fixture
+def aramis_detail_confirmed() -> bytes:
+    """That hit hydrated: MPAssist AG as an Innosuisse implementation partner."""
+    return load("aramis", "project_detail_confirmed.json")
+
+
+@pytest.fixture
+def aramis_detail_uid() -> bytes:
+    """A detail carrying a participant UID: Storz Medical AG on project 60596."""
+    return load("aramis", "project_detail_uid.json")
+
+
+@pytest.fixture
+def aramis_detail_no_uid() -> bytes:
+    """A detail with no participant UID, and invented people in the PII fields."""
+    return load("aramis", "project_detail_no_uid.json")
+
+
+@pytest.fixture
+def aramis_fault() -> bytes:
+    """An A2AFault body, which the service sends with HTTP 200 as well as 500."""
+    return load("aramis", "fault_count.json")

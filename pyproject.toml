@@ -1,7 +1,7 @@
 [project]
 name = "swissco"
-version = "0.2.0"
-description = "Swiss company data from the shell: Zefix and SHAB in one command"
+version = "0.3.0"
+description = "Swiss company data from the shell: Zefix, SHAB, simap, FINMA, GLEIF and ARAMIS in one command"
 readme = "README.md"
 license = "MIT"
 authors = [
@@ -11,6 +11,7 @@ requires-python = ">=3.14"
 keywords = [
     "swiss", "zefix", "shab", "sogc", "commercial-register", "handelsregister",
     "cli", "lindas", "simap", "finma", "procurement", "public-tenders",
+    "lei", "gleif", "aramis", "research", "innosuisse",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

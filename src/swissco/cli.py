@@ -28,10 +28,12 @@ from zefix_parser import AuthenticationError, ZefixError
 
 from . import (
     __version__,
+    aramis,
     companies,
     config,
     events,
     finma,
+    gleif,
     publications,
     render,
     simap,
@@ -67,6 +69,8 @@ examples:
   swissco tenders --canton ZH --since 2026-08-01
   swissco vendor CHE-409.633.691
   swissco finma --category 3
+  swissco lei CHE-412.669.376
+  swissco research "hydrogen storage" --lang EN
 """
 
 
@@ -74,7 +78,7 @@ def build_parser() -> argparse.ArgumentParser:
     """The full parser tree."""
     parser = argparse.ArgumentParser(
         prog="swissco",
-        description="Swiss company data from the shell: Zefix and SHAB in one command.",
+        description="Swiss company data from the shell: six open-data sources in one command.",
         epilog=EPILOG,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -92,6 +96,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="add FINMA licence and supervisory category. Costs two extra "
         "downloads on a cold cache, so it is opt-in.",
+    )
+    lookup.add_argument(
+        "--lei",
+        action="store_true",
+        help="add the LEI and the entities that consolidate this one. Costs "
+        "three extra requests, so it is opt-in.",
     )
     _common(lookup)
     lookup.set_defaults(handler=_lookup)
@@ -237,6 +247,44 @@ def build_parser() -> argparse.ArgumentParser:
     _common(fnm)
     fnm.set_defaults(handler=_finma)
 
+    lei = subparsers.add_parser(
+        "lei",
+        help="one company's LEI and the group it is consolidated into",
+        description=(
+            "Look a company up in GLEIF by its UID and report the LEI, the "
+            "entity that consolidates it and the entity at the top of that "
+            "chain. GLEIF Level 2 records accounting consolidation, so a "
+            "parent here is the entity that consolidates this one."
+        ),
+    )
+    lei.add_argument("uid", help="the company's UID")
+    lei.add_argument(
+        "--children",
+        action="store_true",
+        help="list the entities this one consolidates, instead of counting them",
+    )
+    _common(lei)
+    lei.set_defaults(handler=_lei)
+
+    rsrch = subparsers.add_parser(
+        "research",
+        help="federally funded research projects from ARAMIS",
+        description=(
+            "Search the Confederation's register of publicly funded research. "
+            "A UID is confirmed against the project's own participant UID; "
+            "free text is searched as given and reported unconfirmed."
+        ),
+    )
+    rsrch.add_argument("query", help="a UID, or text to search projects for")
+    rsrch.add_argument(
+        "--lang",
+        choices=aramis.LANGUAGES,
+        default=aramis.DEFAULT_LANGUAGE,
+        help=f"service language, case-sensitive (default: {aramis.DEFAULT_LANGUAGE})",
+    )
+    _common(rsrch)
+    rsrch.set_defaults(handler=_research)
+
     wtch = subparsers.add_parser(
         "watch",
         help="report what changed since the last run",
@@ -295,9 +343,14 @@ def main(argv: list[str] | None = None) -> int:
         render.fail(str(exc), code="authentication_failed")
     except (ZefixError, ShabError) as exc:
         render.fail(str(exc), code="upstream_error")
-    except simap.ContractError as exc:
+    except (simap.ContractError, gleif.ContractError, aramis.ContractError) as exc:
         render.fail(str(exc), code="contract_changed")
-    except (simap.SimapError, finma.FinmaError) as exc:
+    except (
+        simap.SimapError,
+        finma.FinmaError,
+        gleif.GleifError,
+        aramis.AramisError,
+    ) as exc:
         render.fail(str(exc), code="parse_error")
     except HttpError as exc:
         render.fail(str(exc), code="upstream_error")
@@ -346,6 +399,19 @@ def _lookup(args, settings: config.Config) -> int:
             )
         else:
             row.update(finma.lookup_fields(record))
+
+    if args.lei:
+        with sources.gleif(settings, on_note=_noter(settings)) as client:
+            lei_record = gleif.find_by_uid(client, uid)
+            if lei_record is None:
+                render.note(
+                    "no LEI on file at GLEIF. About 28,000 Swiss entities hold "
+                    "one, so a miss here says nothing about the company.",
+                    quiet=settings.quiet,
+                )
+            else:
+                found = gleif.group(client, lei_record.lei)
+                row.update(gleif.lookup_fields(lei_record, found))
 
     render.emit_object(row, fmt=args.fmt)
     return EXIT_OK
@@ -573,6 +639,101 @@ def _finma(args, settings: config.Config) -> int:
         snapshot, query=args.query, licence_type=args.licence, category=args.category
     )
     render.emit([finma.bank_row(record) for record in records[: args.limit]], fmt=args.fmt)
+    return EXIT_OK
+
+
+def _lei(args, settings: config.Config) -> int:
+    uid = companies.resolve_uid(args.uid)
+    with sources.gleif(settings, on_note=_noter(settings)) as client:
+        record = gleif.find_by_uid(client, uid)
+        if record is None:
+            render.fail(
+                f"no LEI filed at GLEIF under {gleif.dotted(uid)}. About 28,000 Swiss "
+                "entities hold an LEI against roughly 790,000 in the "
+                "commercial register, so this means the company has no LEI on "
+                "file.",
+                code="not_found",
+            )
+            return EXIT_ERROR
+
+        found = gleif.group(client, record.lei, children=True, page_size=args.limit)
+
+    if args.children:
+        page = found.direct_children
+        render.note(
+            f"{record.legal_name} consolidates {page.total} entities directly. "
+            "GLEIF Level 2 records accounting consolidation, so this is who "
+            "reports into whose accounts.",
+            quiet=settings.quiet,
+        )
+        rows = [gleif.child_row(entity) for entity in page.entities[: args.limit]]
+        render.emit(rows, fmt=args.fmt)
+        return EXIT_OK
+
+    render.emit_object(gleif.lei_row(record, found), fmt=args.fmt)
+    return EXIT_OK
+
+
+def _research(args, settings: config.Config) -> int:
+    try:
+        uid = companies.resolve_uid(args.query)
+    except NotAUid:
+        uid = ""
+
+    with sources.aramis(settings, on_note=_noter(settings)) as client:
+        if not uid:
+            rows = aramis.search(
+                client, keywords=args.query, language=args.lang, limit=args.limit
+            )
+            if not rows:
+                render.note(f"no ARAMIS projects matching {args.query!r}", quiet=settings.quiet)
+                render.emit([], fmt=args.fmt)
+                return EXIT_OK
+            render.note(
+                f"{len(rows)} projects match; fetching each one to list its "
+                f"participants, at {settings.interval}s per request",
+                quiet=settings.quiet,
+            )
+            details = aramis.hydrate(
+                client, rows, language=args.lang, on_note=_noter(settings)
+            )
+            render.emit([aramis.project_row(detail) for detail in details], fmt=args.fmt)
+            return EXIT_OK
+
+        with sources.lindas(settings) as lindas:
+            entity = companies.lookup(lindas, uid)
+        if entity is None:
+            render.fail(
+                f"no company with UID {args.query} in the LINDAS dataset", code="not_found"
+            )
+            return EXIT_ERROR
+
+        term = aramis.search_term(entity.legal_name)
+        render.note(
+            f"searching ARAMIS for {term!r}, then confirming each candidate on "
+            f"its own participant UID at {settings.interval}s per request",
+            quiet=settings.quiet,
+        )
+        confirmed = aramis.confirmed_projects(
+            client,
+            uid,
+            term,
+            language=args.lang,
+            limit=args.limit,
+            on_note=_noter(settings),
+        )
+
+    if not confirmed:
+        render.note(
+            f"no ARAMIS project confirms {entity.legal_name} under "
+            f"{aramis.dotted(uid)}. The "
+            "service searches project titles, abstracts and the free-text "
+            "contractor field, and a company named only in the structured "
+            "participant list cannot be found through it.",
+            quiet=settings.quiet,
+        )
+    rows = [aramis.confirmed_row(detail, person) for detail, person in confirmed]
+    render.emit(rows, fmt=args.fmt)
     return EXIT_OK
 
 

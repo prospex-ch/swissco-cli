@@ -4,18 +4,21 @@
 [![Documentation](https://readthedocs.org/projects/swissco/badge/?version=latest)](https://swissco.readthedocs.io/en/latest/)
 
 Swiss company data from the shell. Look a company up by UID, search 790,000 of them
-by name or by what they say they do, list gazette publications, browse public
+by name or by legal purpose, list gazette publications, browse public
 tenders, check a bank licence, or watch a list of companies for change.
 
 ```bash
 uvx swissco lookup CHE-444.420.929
 ```
 
-All data comes from four federal open-data sources, none of which needs a
-credential: [Zefix on LINDAS](https://ld.admin.ch/) for the commercial register,
-the [Amtsblattportal](https://amtsblattportal.ch) for the Swiss Official Gazette
-of Commerce, [simap.ch](https://www.simap.ch) for public procurement, and
-[FINMA](https://www.finma.ch) for authorised banks and securities firms.
+All data comes from six open-data sources, none of which needs a credential:
+[Zefix on LINDAS](https://ld.admin.ch/) for the commercial register, the
+[Amtsblattportal](https://amtsblattportal.ch) for the Swiss Official Gazette of
+Commerce, [simap.ch](https://www.simap.ch) for public procurement,
+[FINMA](https://www.finma.ch) for authorised banks and securities firms,
+[GLEIF](https://www.gleif.org) for the Legal Entity Identifier and group
+structure, and [ARAMIS](https://www.aramis.admin.ch) for federally funded
+research.
 
 Built and maintained by [Prospex](https://prospex.ch), a Swiss B2B sales intelligence platform.
 
@@ -189,6 +192,63 @@ Banks and securities firms only: FINMA licenses insurers, portfolio managers and
 fund management companies on separate lists this does not read. A miss means "not
 on this list", never "unlicensed".
 
+### `swissco lei`
+
+A company's Legal Entity Identifier, and the group it is consolidated into.
+
+```console
+$ swissco lei CHE-412.669.376
+legal name                 UBS Switzerland AG
+lei                        549300WOIFUSNYH0FL22
+registered as              CHE-412.669.376
+jurisdiction               CH
+status                     ACTIVE
+initial registration date  2014-12-15
+direct parent              UBS AG (BFM8T61CT2L1QCEMIK50, CH)
+ultimate parent            UBS Group AG (549300SZJ9VS8SGXAN81, CH)
+direct children            0
+```
+
+`--children` lists what this company consolidates instead of counting it, and
+`--lei` on `lookup` folds the same fields into a company profile.
+
+The parent is often foreign, and that is the reason to run this: a Swiss
+subsidiary's owner abroad has no commercial-register entry, so the register
+cannot answer the question at all.
+
+GLEIF Level 2 records **accounting consolidation**: a parent is the entity that
+consolidates this one into its accounts, which it may do without owning all of
+it. About 28,000 Swiss entities hold an LEI against roughly 790,000 in the
+register, so a miss means "no LEI on file" and nothing more.
+
+### `swissco research`
+
+Federally funded research projects from ARAMIS, the Confederation's register of
+research and innovation mandates. Innosuisse and SNSF money included.
+
+```console
+$ swissco research CHE-337.958.399
+TITLE                                 PROJECT_NUMBER    OFFICE      STATUS      START_DATE  ROLE
+Reducing Documentation Burden in S…   137.839 INNO-ICT  INNOSUISSE  In Process  2026-06-01  Implementation Partner
+```
+
+A UID is confirmed against each project's own participant UID, so every row
+reported is exact. Free text is searched as given and every hit comes back with
+its participating organisations. `--limit` caps how many candidates are hydrated,
+since the participant list costs one request per project, and `--lang` picks `DE`,
+`EN`, `FR` or `IT`.
+
+ARAMIS searches project titles, abstracts and the free-text contractor field, and
+indexes the structured participant list under none of them. A company named only
+as a structured partner cannot be found, which is where Innosuisse implementation
+partners usually sit, so an empty result means only that no project mentions
+this company by name. It is not evidence that the company has taken no federal
+research money.
+
+`swissco` reads the organisation, the role, the UID and the place off a
+participant. ARAMIS also publishes the researcher's name, e-mail address and
+telephone numbers, and none of those has a field in the parser.
+
 ## Output
 
 `--format` is the only thing that changes the output. A command piped into `jq` and
@@ -203,7 +263,7 @@ where `--quiet` silences them; errors go to stderr as a single JSON object.
 
 This repository ships an [Agent Skill](https://agentskills.io/specification). It
 teaches Claude Code, Cursor, Codex and around twenty other agents how to drive
-`swissco`: the five commands, and the traps that quietly produce a wrong answer.
+`swissco`: every command, and the traps that quietly produce a wrong answer.
 
 The skill is the directory `.agents/skills/swissco/`, the cross-client location
 every compliant agent scans, with `.claude/skills/swissco` symlinked to it so
@@ -249,6 +309,15 @@ says nothing about `/api`, where every request here goes.
 rather than versions them, so they are cached for a week and re-fetched after
 that.
 
+**GLEIF.** The record API answers unauthenticated. GLEIF publishes the LEI data
+for anyone to use, and the [terms of
+use](https://www.gleif.org/en/meta/gleif-data-use-policy) state what applies.
+
+**ARAMIS.** The public service answers unauthenticated and asks not to be
+flooded, so `swissco` paces it and reads one project at a time. The 43 MB bulk
+export sits on a host this client's allowlist omits, which is why no command can
+pull it.
+
 ## Being a good citizen
 
 These are small public services run by federal offices. `swissco` sends one request
@@ -263,8 +332,8 @@ this repository's URL. `--interval` can raise those floors and cannot lower them
 | [`zefix-parser`](https://pypi.org/project/zefix-parser/) | Zefix: LINDAS SPARQL, PublicREST, UID validation |
 | [`shab-parser`](https://pypi.org/project/shab-parser/) | SHAB: discovery, fetch, parse, eleven-type event classification |
 
-Both are MIT and maintained alongside this one. simap and FINMA ship no client, so
-`swissco` carries its own for those two.
+Both are MIT and maintained alongside this one. simap, FINMA, GLEIF and ARAMIS
+ship no client, so `swissco` carries its own for those four.
 
 ## Watching more than a list
 

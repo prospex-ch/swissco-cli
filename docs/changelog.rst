@@ -1,6 +1,34 @@
 Changelog
 =========
 
+0.3.0 (2026-09-05)
+------------------
+
+Two more sources, one of them the first from outside Switzerland.
+
+- ``lei``: a company's Legal Entity Identifier from GLEIF, the entity that
+  consolidates it, and the entity at the top of that chain. ``--children``
+  lists what it consolidates in turn. The parent is frequently foreign, which
+  is the case for reading it: the commercial register carries no entry for a
+  Swiss company's owner abroad.
+- ``lookup --lei`` adds the LEI and both parents to a company. Opt-in, the way
+  ``--finma`` is, because it costs requests a plain ``lookup`` does not.
+- Both UID spellings GLEIF stores are tried, squashed first. A 404 on a
+  relationship is read as "reports no parent".
+- ``research``: federally funded research projects from ARAMIS, Innosuisse and
+  SNSF money included. A UID is confirmed against each project's own
+  participant UID; free text is searched as given and reported unconfirmed.
+- ARAMIS's ``Count`` ceiling and its case-sensitive ``Language`` are refused
+  before the request, and an ``A2AFault`` body is recognised even when it
+  arrives with HTTP 200.
+- No participant search, because ARAMIS offers none. Its three text keys reach
+  the title, the abstract, the contractor field and the budget field, so a
+  company named only in the structured participant list cannot be found.
+- ``swissco.aramis.Participant`` carries no field for a researcher's name,
+  e-mail address or telephone number, and a test asserts that none of them
+  survives the parser.
+- No bulk export. The 43 MB ARAMIS file is off the client's host allowlist.
+
 0.2.0 (2026-09-05)
 ------------------
 

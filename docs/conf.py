@@ -1,7 +1,7 @@
 project = "swissco"
 author = "Prospex"
 copyright = "2026 Prospex"
-release = "0.1.0"
+release = "0.3.0"
 
 extensions = [
     "sphinx.ext.autodoc",

@@ -1,0 +1,129 @@
+{
+ "Abstract": {
+  "Attachments": null,
+  "Category": {
+   "LanguageCode": "EN",
+   "Text": "Short description"
+  },
+  "LanguageCode": "DE",
+  "Text": "Visual Analytics for Predictive Traffic Modelling"
+ },
+ "Categories": [],
+ "Category": {
+  "LanguageCode": "EN",
+  "Text": "Project"
+ },
+ "EndDate": "/Date(1592604000000+0200)/",
+ "GrantedTotalCosts": 15000.0,
+ "Labels": [],
+ "LastModification": null,
+ "NABSPolicyDomain": {
+  "LanguageCode": "EN",
+  "Text": "Industrial production and technology"
+ },
+ "Participants": [
+  {
+   "Canton": "AG",
+   "City": "Windisch",
+   "Company1": "FHNW",
+   "Company2": "Fachhochschule Nordwestschweiz",
+   "Company3": null,
+   "Company4": null,
+   "Country": "CH",
+   "EMail": "alex.muster@example.ch",
+   "FamilyName": "Muster",
+   "FormOfAddress": "Frau",
+   "KindOfParticipation": {
+    "LanguageCode": "EN",
+    "Text": "Contact person"
+   },
+   "Language": null,
+   "Phone1": "+41 61 000 00 01",
+   "Phone1Note": null,
+   "Phone2": "+41 61 000 00 02",
+   "Phone2Note": null,
+   "Phone3": null,
+   "Phone3Note": null,
+   "PostCode": "5210",
+   "PostOfficeBox": null,
+   "Prename": "Alex",
+   "Region": null,
+   "ShortDesignation": null,
+   "ShortViewName": "FHNW Alex Muster",
+   "Street": "Bahnhofstrasse 6",
+   "Telefax": "+41 61 000 00 09",
+   "Title": "Dr.",
+   "Type": null,
+   "URL1": null,
+   "URL2": null
+  },
+  {
+   "Canton": "ZH",
+   "City": "Zürich",
+   "Company1": "Bernet Engineering",
+   "Company2": null,
+   "Company3": null,
+   "Company4": null,
+   "Country": "CH",
+   "EMail": "robin.beispiel@example.ch",
+   "FamilyName": "Beispiel",
+   "FormOfAddress": "Herr",
+   "KindOfParticipation": {
+    "LanguageCode": "EN",
+    "Text": "Implementation Partner "
+   },
+   "Language": "DE",
+   "Phone1": "+41 44 000 00 03",
+   "Phone1Note": null,
+   "Phone2": null,
+   "Phone2Note": null,
+   "Phone3": null,
+   "Phone3Note": null,
+   "PostCode": "8006",
+   "PostOfficeBox": null,
+   "Prename": "Robin",
+   "Region": null,
+   "ShortDesignation": null,
+   "ShortViewName": "Bernet Engineering Robin Beispiel",
+   "Street": "Scherrstrasse 7",
+   "Telefax": null,
+   "Title": null,
+   "Type": null,
+   "URL1": null,
+   "URL2": null
+  }
+ ],
+ "Principals": [],
+ "ProjectId": 43290,
+ "ProjectNumber": "34773.1 INNO-ICT",
+ "ProjectStatus": {
+  "LanguageCode": "EN",
+  "Text": "Finished"
+ },
+ "ProjectTitle": {
+  "LanguageCode": "EN",
+  "Text": "Visual Analytics for Predictive Traffic Modelling"
+ },
+ "ProjectTypeId": 1,
+ "ResearchDisciplines": [
+  {
+   "Name": "P170 Computer science, numerical analysis, systems, control",
+   "Quota": 100
+  }
+ ],
+ "ResearchType": {
+  "LanguageCode": "EN",
+  "Text": "Applied research and development"
+ },
+ "ResearchUnit": {
+  "LanguageCode": "EN",
+  "Text": "INNOSUISSE"
+ },
+ "Section": {
+  "LanguageCode": "EN",
+  "Text": "50 ICT"
+ },
+ "StartDate": "/Date(1545260400000+0100)/",
+ "Textes": [],
+ "Topics": []
+}
