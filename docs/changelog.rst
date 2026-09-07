@@ -1,6 +1,26 @@
 Changelog
 =========
 
+0.4.0 (2026-09-07)
+------------------
+
+An MCP server, and the two small promotions it needed.
+
+- ``swissco-mcp``: the same six sources as an MCP server, nine tools, one per
+  command except ``watch``. It ships from this repository as its own PyPI and
+  npm package, and is documented at
+  `swissco-mcp.readthedocs.io <https://swissco-mcp.readthedocs.io>`_. Every
+  tool returns the rows the ``*_row()`` builders already produce, so a field
+  carries the same name in an MCP result and in ``--format json``.
+- The domain caveats the commands write to stderr travel with the rows there,
+  in a ``notes`` list on every result.
+- ``swissco.render.jsonable`` is public. It is what ``--format json``
+  serialises a ``date`` with, and the MCP layer maps rows through it so a day
+  is spelled the same way in both surfaces.
+- ``swissco.publications.estimate`` is public, moved out of the CLI along with
+  ``PUBLICATIONS_PER_DAY``. It reads ``publications.OFFSET_WINDOW`` and
+  ``events.PAGE_SIZE``.
+
 0.3.0 (2026-09-05)
 ------------------
 

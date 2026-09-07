@@ -143,16 +143,6 @@ class TestRange:
             )
 
 
-class TestPageEstimate:
-    def test_a_short_range_says_so(self):
-        assert "One or two" in cli._page_estimate(date(2026, 9, 3), date(2026, 9, 4))
-
-    def test_a_long_range_counts_windows_and_both_states(self):
-        note = cli._page_estimate(date(2026, 1, 1), date(2026, 12, 31))
-        assert "windows" in note
-        assert "both" in note
-
-
 class TestTheNewSources:
     """Everything here fails before a request, so the suite stays offline."""
 

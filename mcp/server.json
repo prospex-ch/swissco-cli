@@ -1,0 +1,54 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ch.prospex/swissco",
+  "title": "Swiss company data",
+  "description": "Swiss company data: Zefix register, SHAB gazette, simap tenders, FINMA, GLEIF and ARAMIS",
+  "websiteUrl": "https://prospex.ch",
+  "repository": {
+    "url": "https://github.com/prospex-ch/swissco-cli",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "swissco-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "ZEFIX_USER",
+          "description": "Zefix PublicREST username, issued by zefix@bj.admin.ch. Optional: every tool works without it.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "ZEFIX_PASSWORD",
+          "description": "The matching Zefix PublicREST password.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "SWISSCO_STATE",
+          "description": "Where gazette bodies and the two FINMA files are cached. Defaults to ~/.swissco.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "SWISSCO_INTERVAL",
+          "description": "Seconds between requests. Raises the floor of 0.5s and cannot lower it.",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    },
+    {
+      "registryType": "npm",
+      "identifier": "swissco-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": { "type": "stdio" }
+    }
+  ]
+}

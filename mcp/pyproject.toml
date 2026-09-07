@@ -1,0 +1,46 @@
+[project]
+name = "swissco-mcp"
+version = "0.1.0"
+description = "MCP server for Swiss company data: Zefix, SHAB, simap, FINMA, GLEIF and ARAMIS"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Prospex", email = "hello@prospex.ch" },
+]
+requires-python = ">=3.14"
+keywords = [
+    "mcp", "model-context-protocol", "swiss", "zefix", "shab", "sogc",
+    "commercial-register", "handelsregister", "lindas", "simap", "finma",
+    "procurement", "public-tenders", "lei", "gleif", "aramis",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Office/Business :: Financial",
+    "Typing :: Typed",
+]
+dependencies = [
+    "swissco>=0.4",
+    "mcp>=2.1,<3",
+]
+
+[project.scripts]
+swissco-mcp = "swissco_mcp.server:main"
+
+[project.urls]
+Homepage = "https://prospex.ch"
+Repository = "https://github.com/prospex-ch/swissco-cli"
+Documentation = "https://swissco-mcp.readthedocs.io"
+
+[build-system]
+requires = ["uv_build>=0.11.32,<0.12.0"]
+build-backend = "uv_build"
+
+# Local development only. uv_build deserialises nothing from `tool.uv` beyond
+# `tool.uv.build-backend`, so the published metadata carries the plain
+# `swissco>=0.4` above.
+[tool.uv.sources]
+swissco = { workspace = true }

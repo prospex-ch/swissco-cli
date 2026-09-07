@@ -1,0 +1,43 @@
+{
+  "name": "swissco-mcp",
+  "version": "0.1.0",
+  "mcpName": "ch.prospex/swissco",
+  "description": "MCP server for Swiss company data: Zefix, SHAB, simap, FINMA, GLEIF and ARAMIS",
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "model-context-protocol",
+    "swiss",
+    "switzerland",
+    "zefix",
+    "shab",
+    "handelsregister",
+    "commercial-register",
+    "simap",
+    "finma",
+    "procurement",
+    "public-tenders",
+    "lei",
+    "gleif",
+    "aramis"
+  ],
+  "homepage": "https://prospex.ch",
+  "bugs": "https://github.com/prospex-ch/swissco-cli/issues",
+  "license": "MIT",
+  "author": "Prospex <hello@prospex.ch> (https://prospex.ch)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prospex-ch/swissco-cli.git",
+    "directory": "npm"
+  },
+  "bin": {
+    "swissco-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -25,7 +25,7 @@ compatibility: >
 allowed-tools: Bash(swissco:*) Bash(uvx swissco:*)
 metadata:
   author: prospex-ch
-  version: "0.3.0"
+  version: "0.4.0"
   repository: https://github.com/prospex-ch/swissco-cli
   documentation: https://swissco.readthedocs.io
 ---
@@ -370,6 +370,10 @@ when a command is the wrong shape:
   the PublicREST client, UID and CH-ID validation.
 - [`shab-parser`](https://shab-parser.readthedocs.io): gazette discovery, fetch,
   XML parsing, and the eleven-type event classifier with its text extractors.
+
+The same six sources are also an MCP server, `swissco-mcp`, for a host that
+calls tools: <https://swissco-mcp.readthedocs.io>. It carries the caveats above
+in a `notes` field on every result.
 
 Skill by [prospex.ch](https://prospex.ch)
 

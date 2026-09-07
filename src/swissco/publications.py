@@ -64,6 +64,39 @@ class ListEntry:
 #: however small the pages are, so :func:`discover` splits the range instead.
 OFFSET_WINDOW = 10_000
 
+#: Commercial-register publications the gazette issues on an average day, used
+#: only to tell a caller how long a wide range will take before it starts.
+PUBLICATIONS_PER_DAY = 1000
+
+
+def estimate(start: date, end: date) -> str:
+    """How long listing this range will take, before any body is fetched.
+
+    The gazette publishes roughly a thousand commercial-register entries a day.
+    Each list page holds :data:`swissco.events.PAGE_SIZE`, and a range past
+    about ten days is split into several windows, so both numbers grow with the
+    range. Short ranges get a sentence with no arithmetic in it, because the
+    answer is "immediately".
+    """
+    # Imported here rather than at the top: :mod:`swissco.events` reads
+    # :class:`ListEntry` from this module, so a module-level import would
+    # close the loop.
+    from . import events
+
+    days = (end - start).days + 1
+    listed = days * PUBLICATIONS_PER_DAY
+    windows = max(1, -(-listed // OFFSET_WINDOW))
+    # Per state: one probe request per window plus the pages it takes to read
+    # it. Doubled, because PUBLISHED and CANCELLED are listed separately.
+    requests = 2 * (windows + max(1, -(-listed // events.PAGE_SIZE)))
+    if requests <= 4:
+        return "One or two list pages per publication state."
+    return (
+        f"About {requests} list requests across {windows} windows and both "
+        f"publication states, so at least {round(requests * 0.5)}s before any "
+        "body is fetched."
+    )
+
 
 def discover(
     client: ShabClient,

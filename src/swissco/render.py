@@ -145,6 +145,25 @@ def fail(message: str, *, code: str = "error") -> None:
     )
 
 
+def jsonable(value):
+    """*value* in a form :mod:`json` can serialise.
+
+    A :class:`~datetime.date` becomes its ISO-8601 day. Anything else the
+    encoder already handles never reaches here, and anything it does not
+    raises :class:`TypeError`.
+
+    Usable as ``json.dumps(..., default=jsonable)``, and callable directly by
+    anything that has to hand a row to a caller that speaks JSON.
+    """
+    if isinstance(value, date):
+        return value.isoformat()
+    raise TypeError(f"cannot serialise {type(value).__name__}")
+
+
+#: The former private name, kept for the call sites in this module.
+_serialise = jsonable
+
+
 def _line(cells: list[str], widths: list[int]) -> str:
     padded = [cell.ljust(width) for cell, width in zip(cells, widths)]
     return "  ".join(padded).rstrip()
@@ -170,8 +189,3 @@ def _truncate(cell: str) -> str:
         return collapsed
     return collapsed[: MAX_CELL - 1] + "…"
 
-
-def _serialise(value):
-    if isinstance(value, date):
-        return value.isoformat()
-    raise TypeError(f"cannot serialise {type(value).__name__}")

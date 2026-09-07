@@ -1,6 +1,6 @@
 [project]
 name = "swissco"
-version = "0.3.0"
+version = "0.4.0"
 description = "Swiss company data from the shell: Zefix, SHAB, simap, FINMA, GLEIF and ARAMIS in one command"
 readme = "README.md"
 license = "MIT"
@@ -30,7 +30,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "mcp>=2.1,<3"]
 
 [project.scripts]
 swissco = "swissco.cli:main"
@@ -43,6 +43,13 @@ Documentation = "https://swissco.readthedocs.io"
 [build-system]
 requires = ["uv_build>=0.11.32,<0.12.0"]
 build-backend = "uv_build"
+
+# swissco-mcp is a sibling distribution under mcp/. The member resolves
+# swissco from this working tree; its published wheel keeps a plain
+# `swissco>=0.4` dependency, because uv_build reads nothing from tool.uv
+# beyond tool.uv.build-backend.
+[tool.uv.workspace]
+members = ["mcp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

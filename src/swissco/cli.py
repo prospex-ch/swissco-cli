@@ -49,10 +49,6 @@ EXIT_CHANGED = 10
 
 EVENT_TYPES = [e.value for e in EventType]
 
-#: Commercial-register publications the gazette issues on an average day, used
-#: only to tell a user how long a wide range will take before it starts.
-PUBLICATIONS_PER_DAY = 1000
-
 EPILOG = """\
 credentials:
   Every command works without them. Supplying Zefix PublicREST credentials,
@@ -505,7 +501,7 @@ def _events(args, settings: config.Config) -> int:
     start, end = _range(args, default_days=365)
     render.note(
         f"{entity.legal_name}: scanning the gazette from {start} to {end}. "
-        f"{_page_estimate(start, end)}",
+        f"{publications.estimate(start, end)}",
         quiet=settings.quiet,
     )
 
@@ -809,28 +805,6 @@ def _range(args, *, default_days: int) -> tuple[date, date]:
     if start > end:
         raise ValueError(f"--since {start} is after --until {end}")
     return start, end
-
-
-def _page_estimate(start: date, end: date) -> str:
-    """How long listing this range will take, before any body is fetched.
-
-    The gazette publishes roughly a thousand commercial-register entries a day.
-    Each list page holds 2,000, and a range past ten days is split into several
-    windows, so both numbers grow with the range.
-    """
-    days = (end - start).days + 1
-    listed = days * PUBLICATIONS_PER_DAY
-    windows = max(1, -(-listed // publications.OFFSET_WINDOW))
-    # Per state: one probe request per window plus the pages it takes to read
-    # it. Doubled, because PUBLISHED and CANCELLED are listed separately.
-    requests = 2 * (windows + max(1, -(-listed // events.PAGE_SIZE)))
-    if requests <= 4:
-        return "One or two list pages per publication state."
-    return (
-        f"About {requests} list requests across {windows} windows and both "
-        f"publication states, so at least {round(requests * 0.5)}s before any "
-        "body is fetched."
-    )
 
 
 def _batched(values: list[str], size: int):

@@ -12,3 +12,9 @@ wheels/
 
 # Built documentation
 docs/_build/
+
+# Registry publishing key
+key.pem
+
+# Second docs project
+mcp/docs/_build/

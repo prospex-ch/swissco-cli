@@ -1,7 +1,7 @@
-project = "swissco"
+project = "swissco-mcp"
 author = "Prospex"
 copyright = "2026 Prospex"
-release = "0.4.0"
+release = "0.1.0"
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -17,10 +17,10 @@ intersphinx_mapping = {
 }
 
 html_theme = "furo"
-html_title = "swissco"
+html_title = "swissco-mcp"
 
 html_theme_options = {
     "source_repository": "https://github.com/prospex-ch/swissco-cli",
     "source_branch": "master",
-    "source_directory": "docs/",
+    "source_directory": "mcp/docs/",
 }

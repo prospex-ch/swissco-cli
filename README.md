@@ -284,6 +284,28 @@ The agent can then answer questions like "which companies in Zug mention
 blockchain in their purpose" or "has anything changed at CHE-105.943.826 since
 June" by running the right command itself.
 
+## Use it as an MCP server
+
+The same six sources are available as an MCP server, from this repository.
+Nine tools, one per command except `watch`.
+
+```bash
+claude mcp add swissco -- uvx swissco-mcp
+```
+
+Every tool returns `rows`, a `count`, and `notes`. The rows are the dicts
+`swissco --format json` prints, so a field carries the same name in both
+surfaces. The notes carry what each source covers, which is what turns an empty
+result into an answer: FINMA's list omits insurers and portfolio managers, and
+about 28,000 Swiss entities hold an LEI against roughly 790,000 in the
+register.
+
+It lives in [`mcp/`](mcp/), ships as the PyPI package
+[`swissco-mcp`](https://pypi.org/project/swissco-mcp/) and the npm package of
+the same name, and is registered as `ch.prospex/swissco`. Full reference for
+every tool, its arguments and its caveats:
+[swissco-mcp.readthedocs.io](https://swissco-mcp.readthedocs.io).
+
 ## Access and terms
 
 **SHAB / Amtsblattportal.** The REST API is the channel the operator offers for
