@@ -371,4 +371,6 @@ when a command is the wrong shape:
 - [`shab-parser`](https://shab-parser.readthedocs.io): gazette discovery, fetch,
   XML parsing, and the eleven-type event classifier with its text extractors.
 
+Skill by [prospex.ch](https://prospex.ch)
+
 Full documentation: <https://swissco.readthedocs.io>.
