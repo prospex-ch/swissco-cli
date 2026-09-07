@@ -1,6 +1,6 @@
 {
   "name": "swissco-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "mcpName": "ch.prospex/swissco",
   "description": "MCP server for Swiss company data: Zefix, SHAB, simap, FINMA, GLEIF and ARAMIS",
   "keywords": [

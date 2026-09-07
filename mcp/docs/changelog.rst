@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.1.1 (2026-09-07)
+------------------
+
+- ``swissco_tenders`` says what its date filter matches: each project's newest
+  publication, whichever type that publication is. ``pub_types`` is what
+  narrows a result to awards.
+
 0.1.0 (2026-09-07)
 ------------------
 

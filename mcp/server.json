@@ -8,12 +8,12 @@
     "url": "https://github.com/prospex-ch/swissco-cli",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "swissco-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "runtimeHint": "uvx",
       "transport": { "type": "stdio" },
       "environmentVariables": [
@@ -46,7 +46,7 @@
     {
       "registryType": "npm",
       "identifier": "swissco-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "runtimeHint": "npx",
       "transport": { "type": "stdio" }
     }
