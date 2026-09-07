@@ -209,9 +209,10 @@ The publication types are ``abandonment``, ``advance_notice``, ``award``,
 ``request_for_information``, ``revocation``, ``selective_offering_phase``,
 ``study_contract`` and ``tender``.
 
-**Caveats.** The date filters each project's newest publication rather than its
-award. The supplier named on an award carries no UID, so this reaches projects
-and buyers; ``swissco_vendor`` is the tool for a specific company.
+**Caveats.** The date matches each project's newest publication, whichever
+type that publication is, and ``pub_types`` is what narrows it to awards. The
+supplier named on an award carries no UID, so this reaches projects and buyers;
+``swissco_vendor`` is the tool for one company.
 
 
 swissco_vendor

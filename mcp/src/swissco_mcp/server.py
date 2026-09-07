@@ -683,10 +683,11 @@ def swissco_tenders(
 
     The publication types are: {pub_types}.
 
-    The date filters each project's newest publication rather than its award,
-    and the supplier named on an award carries no UID, so this lists projects
-    and buyers. Use ``swissco_vendor`` for whether a given company is in
-    simap's vendor directory.
+    The date matches each project's newest publication, whichever type that
+    publication is, and ``pub_types`` is what narrows it to awards. The
+    supplier named on an award carries no UID, so this lists projects and
+    buyers. Use ``swissco_vendor`` for whether a given company is in simap's
+    vendor directory.
     """
     notes: list[str] = []
     settings = _settings()
@@ -699,8 +700,8 @@ def swissco_tenders(
         )
 
     notes.append(
-        f"simap projects published {start} to {end}. The date filters each "
-        "project's newest publication, not its award."
+        f"simap projects published {start} to {end}. The date matches each "
+        "project's newest publication, whichever type that publication is."
     )
     with sources.simap(settings, on_note=notes.append) as client:
         rows = [

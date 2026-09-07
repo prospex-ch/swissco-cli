@@ -197,7 +197,7 @@ Public procurement projects from simap, by canton and publication date.
 .. code-block:: console
 
    $ swissco tenders --canton ZG --since 2026-08-25 --limit 3
-   simap projects published 2026-08-25 to 2026-09-05 in ZG. The date filters each project's newest publication, not its award.
+   simap projects published 2026-08-25 to 2026-09-05 in ZG. The date matches each project's newest publication, whichever type that publication is.
      page of 13 projects (after 0)
    TITLE                                                  PROJECT_NUMBER  BUYER                           CANTON  CITY  PUBLICATION_DATE  PUBLICATION_TYPE
    -----------------------------------------------------  --------------  ------------------------------  ------  ----  ----------------  ----------------

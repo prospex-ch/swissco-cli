@@ -530,7 +530,8 @@ def _tenders(args, settings: config.Config) -> int:
     render.note(
         f"simap projects published {start} to {end}"
         + (f" in {', '.join(cantons)}" if cantons else "")
-        + ". The date filters each project's newest publication, not its award.",
+        + ". The date matches each project's newest publication, whichever "
+        "type that publication is.",
         quiet=settings.quiet,
     )
 
