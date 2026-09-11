@@ -1,0 +1,16 @@
+# Everything by default; the Dockerfile opts in to what the build needs.
+*
+
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!src/
+!mcp/pyproject.toml
+!mcp/README.md
+
+# Never, under any pattern above.
+**/__pycache__/
+**/*.py[oc]
+**/.env
+**/key.pem

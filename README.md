@@ -31,6 +31,28 @@ pip install swissco         # or install it
 
 Python 3.14 or newer.
 
+### Docker
+
+```bash
+docker run --rm prospexch/swissco search "Nestlé" --limit 5
+```
+
+The image runs as an unprivileged user and keeps its state — `watch`'s seen-ids
+and the cached FINMA files — in `/home/swissco/.swissco`. Mount a volume there
+for anything that needs to remember what it saw last time:
+
+```bash
+docker run --rm -v swissco-state:/home/swissco/.swissco \
+  prospexch/swissco watch --uid CHE-105.909.036
+```
+
+Zefix credentials, which every command works without, are passed through as
+environment variables:
+
+```bash
+docker run --rm -e ZEFIX_USER -e ZEFIX_PASSWORD prospexch/swissco lookup CHE-105.909.036
+```
+
 ## Commands
 
 Every command takes `--format table|json|csv`, `--limit` and `--quiet`.
