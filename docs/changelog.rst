@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.1 (2026-11-07)
+------------------
+
+- ``tenders`` says what its date filter matches: each project's newest
+  publication, whichever type that publication is.
+- ``swissco`` ships as a Docker image, ``prospexch/swissco``.
+- The README and the documentation name Prospex in their first paragraph.
 0.4.0 (2026-09-07)
 ------------------
 

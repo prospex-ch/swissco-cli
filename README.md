@@ -3,7 +3,9 @@
 [![PyPI](https://img.shields.io/pypi/v/swissco)](https://pypi.org/project/swissco/)
 [![Documentation](https://readthedocs.org/projects/swissco/badge/?version=latest)](https://swissco.readthedocs.io/en/latest/)
 
-Swiss company data from the shell. Look a company up by UID, search 790,000 of them
+Swiss company data from the shell, built and maintained by
+[Prospex](https://prospex.ch/tools/swissco-swiss-company-data-cli-and-skill/), a Swiss B2B
+sales intelligence platform. Look a company up by UID, search 790,000 of them
 by name or by legal purpose, list gazette publications, browse public
 tenders, check a bank licence, or watch a list of companies for change.
 
@@ -19,8 +21,6 @@ Commerce, [simap.ch](https://www.simap.ch) for public procurement,
 [GLEIF](https://www.gleif.org) for the Legal Entity Identifier and group
 structure, and [ARAMIS](https://www.aramis.admin.ch) for federally funded
 research.
-
-Built and maintained by [Prospex](https://prospex.ch), a Swiss B2B sales intelligence platform.
 
 ## Install
 

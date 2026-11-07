@@ -5,7 +5,9 @@
 [![PyPI](https://img.shields.io/pypi/v/swissco-mcp)](https://pypi.org/project/swissco-mcp/)
 [![Documentation](https://readthedocs.org/projects/swissco-mcp/badge/?version=latest)](https://swissco-mcp.readthedocs.io/en/latest/)
 
-An MCP server for Swiss company data. Nine tools that look a company up by UID,
+An MCP server for Swiss company data, built and maintained by
+[Prospex](https://prospex.ch/tools/swissco-swiss-company-data-cli-and-skill/), a Swiss B2B
+sales intelligence platform. Nine tools that look a company up by UID,
 search 790,000 of them by name or by statutory purpose, trace what changed in
 the commercial register, browse public tenders, check a bank licence, resolve a
 UID to an LEI and its group parent, and find federally funded research a company
@@ -23,9 +25,6 @@ Commerce, [simap.ch](https://www.simap.ch) for public procurement,
 [GLEIF](https://www.gleif.org) for the Legal Entity Identifier and group
 structure, and [ARAMIS](https://www.aramis.admin.ch) for federally funded
 research.
-
-Built and maintained by [Prospex](https://prospex.ch), a Swiss B2B sales
-intelligence platform.
 
 ## Install
 

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1.2 (2026-11-07)
+------------------
+
+- The README and the documentation name Prospex in their first paragraph.
 0.1.1 (2026-09-07)
 ------------------
 

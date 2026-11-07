@@ -25,7 +25,7 @@ compatibility: >
 allowed-tools: Bash(swissco:*) Bash(uvx swissco:*)
 metadata:
   author: prospex-ch
-  version: "0.4.0"
+  version: "0.4.1"
   repository: https://github.com/prospex-ch/swissco-cli
   documentation: https://swissco.readthedocs.io
 ---
